@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 import {
   RiDashboardLine,
@@ -8,26 +8,33 @@ import {
   RiLogoutBoxRLine,
   RiMenu3Fill,
   RiCloseLine,
+  RiNotification3Line,
+  RiArrowDownSLine,
+  RiSearchLine,  
+  RiCheckboxBlankCircleFill
 } from "react-icons/ri";
 
 function App() {
-
   const [sidebar, setSidebar] = useState(false);
 
   const handleSidebar = () => {
     setSidebar(!sidebar);
-  }
+  };
 
   return (
     <>
       <div className="min-h-screen grid grid-col-1 lg:grid-cols-6 ">
         {/* Sidebar - Primer Bloque */}
-        <div className={`fixed lg:static w-[80%] md:w-[40%] lg:w-full top-0 z-50 bg-white transition-all  ${sidebar ? "-left-0" : "-left-full"} w-full h-full overflow-y-scroll col-span-1 p-8 border-r`}>
+        <div
+          className={`fixed lg:static w-[80%] md:w-[40%] lg:w-full top-0 z-50 bg-white transition-all  ${
+            sidebar ? "-left-0" : "-left-full"
+          } w-full h-full overflow-y-scroll col-span-1 p-8 border-r`}
+        >
           {/* Logotipo */}
           <div className="text-center p-8">
             <h1 className="uppercase font-bold tracking-[4px]">Tu logo</h1>
           </div>
-          <div className=" flex flex-col justify-between h-[800px]">
+          <div className=" flex flex-col justify-between h-[750px]">
             {/* Menu */}
             <nav>
               <ul>
@@ -94,22 +101,46 @@ function App() {
           </div>
         </div>
         {/* Btn Menu movil */}
-        <button onClick={handleSidebar} className="block lg:hidden absolute bottom-4 right-4 bg-purple-600 p-2 text-white rounded-full text-2xl ">
-          {sidebar ? <RiCloseLine/> : <RiMenu3Fill/>}          
+        <button
+          onClick={handleSidebar}
+          className="block lg:hidden absolute bottom-4 right-4 bg-purple-600 p-2 text-white rounded-full text-2xl "
+        >
+          {sidebar ? <RiCloseLine /> : <RiMenu3Fill />}
         </button>
         {/* Content - Segundo Bloque */}
         <div className="col-span-5">
           {/* Header */}
-          <header>
+          <header className="flex items-center justify-between p-4 w-full">
             {/* Search */}
-            <form>
-              <div>
-                <input type="text" className="bg-red-200" />
+            <form className="w-[30%]">
+              <div className="relative">
+                <RiSearchLine className="absolute left-2 top-3" />
+                <input
+                  type="text"
+                  className="bg-gray-100 py-2 pl-8 pr-4 outline-none rounded-lg w-full"
+                  placeholder="Buscar"
+                />
               </div>
             </form>
             {/* Notifications */}
+            <nav className="w-[70%] flex justify-end">
+              <ul className="flex items-center gap-4">
+                <li>
+                  <a href="#" className="relative">
+                    <RiNotification3Line className="text-xl"/>
+                    <RiCheckboxBlankCircleFill className="absolute -right-1 -top-1 text-xs text-red-500"/>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="flex items-center gap-1">
+                    Jhancarlo Esteban Coro
+                    <RiArrowDownSLine />
+                  </a>
+                </li>
+              </ul>
+            </nav>
           </header>
-          </div>
+        </div>
       </div>
     </>
   );
