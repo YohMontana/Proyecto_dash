@@ -10,8 +10,11 @@ import {
   RiCloseLine,
   RiNotification3Line,
   RiArrowDownSLine,
-  RiSearchLine,  
-  RiCheckboxBlankCircleFill
+  RiSearchLine,
+  RiCheckboxBlankCircleFill,
+  RiFilter3Line,
+  RiMapPinRangeLine,
+  RiDropboxFill,
 } from "react-icons/ri";
 
 function App() {
@@ -34,7 +37,7 @@ function App() {
           <div className="text-center p-8">
             <h1 className="uppercase font-bold tracking-[4px]">Tu logo</h1>
           </div>
-          <div className=" flex flex-col justify-between h-[750px]">
+          <div className=" flex flex-col justify-between h-[800px]">
             {/* Menu */}
             <nav>
               <ul>
@@ -110,9 +113,9 @@ function App() {
         {/* Content - Segundo Bloque */}
         <div className="col-span-5">
           {/* Header */}
-          <header className="flex items-center justify-between p-4 w-full">
+          <header className="flex flex-col md:flex-row gap-4 items-center justify-between p-4 md:pl-8 lg:pl-12 w-full">
             {/* Search */}
-            <form className="w-[30%]">
+            <form className="w-full md:[40%] lg:w-[30%] order-1 md:order-none">
               <div className="relative">
                 <RiSearchLine className="absolute left-2 top-3" />
                 <input
@@ -123,12 +126,12 @@ function App() {
               </div>
             </form>
             {/* Notifications */}
-            <nav className="w-[70%] flex justify-end">
+            <nav className="w-full md:w-[60%] lg:w-[70%] flex justify-center md:justify-end">
               <ul className="flex items-center gap-4">
                 <li>
                   <a href="#" className="relative">
-                    <RiNotification3Line className="text-xl"/>
-                    <RiCheckboxBlankCircleFill className="absolute -right-1 -top-1 text-xs text-red-500"/>
+                    <RiNotification3Line className="text-xl" />
+                    <RiCheckboxBlankCircleFill className="absolute -right-1 -top-1 text-xs text-red-500" />
                   </a>
                 </li>
                 <li>
@@ -140,6 +143,113 @@ function App() {
               </ul>
             </nav>
           </header>
+          {/* Content */}
+          <div className="p-4 md:p-8 lg:12 bg-gray-100">
+            {/* Title  */}
+            <div className="mb-8">
+              <h1 className="text-3xl font-semibold">Job Board</h1>
+            </div>
+            {/* Search */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center mb-6">
+              <form className="col-span-1 md:col-span-2">
+                <div className="relative">
+                  <RiSearchLine className="absolute left-2 top-3 text-purple-600" />
+                  <input
+                    type="text"
+                    className="bg-white py-2 pl-8 pr-4 outline-none  w-full"
+                    placeholder="Buscar"
+                  />
+                </div>
+              </form>
+              <form className="col-span-1">
+                <div className="relative">
+                  <RiMapPinRangeLine className="absolute left-2 top-3 text-purple-600" />
+                  <select
+                    type="text"
+                    className="bg-white py-[10px] pl-8 pr-4 outline-none  w-full"
+                    placeholder="Search"
+                  >
+                    <option>Anywhere</option>
+                  </select>
+                </div>
+              </form>
+              <form className="col-span-1">
+                <div className="relative">
+                  <RiFilter3Line className="absolute left-2 top-3 text-purple-600" />
+                  <input
+                    type="text"
+                    className="bg-white py-2 pl-8 pr-4 outline-none  w-full"
+                    placeholder="Filters"
+                  />
+                  <span className="absolute text-sm right-2 top-[7px] bg-purple-600 text-white py-1 px-[9px] rounded-full">
+                    4
+                  </span>
+                </div>
+              </form>
+            </div>
+            {/* T */}
+            <div className="flex items-center flex-wrap gap-4 mb-20">
+              <span className="bg-white flex items-center gap-4 py-2 pl-4 pr-6 rounded-full">
+                <button className="bg-purple-100 p-1 rounded-full text-purple-600 text-xs">
+                  <RiCloseLine />
+                </button>{" "}
+                <span className="text-gray-500">Design</span>
+              </span>
+              <span className="bg-white flex items-center gap-4 py-2 pl-4 pr-6 rounded-full">
+                <button className="bg-purple-100 p-1 rounded-full text-purple-600 text-xs">
+                  <RiCloseLine />
+                </button>{" "}
+                <span className="text-gray-500">Regular</span>
+              </span>
+              <span className="bg-white flex items-center gap-4 py-2 pl-4 pr-6 rounded-full">
+                <button className="bg-purple-100 p-1 rounded-full text-purple-600 text-xs">
+                  <RiCloseLine />
+                </button>{" "}
+                <span className="text-gray-500">Full time</span>
+              </span>
+              <span className="bg-white flex items-center gap-4 py-2 pl-4 pr-6 rounded-full">
+                <button className="bg-purple-100 p-1 rounded-full text-purple-600 text-xs">
+                  <RiCloseLine />
+                </button>{" "}
+                <span className="text-gray-500">B2B</span>
+              </span>
+              <button className="text-gray-500 ml-4">Clear All</button>
+            </div>
+
+            {/* Results */}
+            <div className="flex items-center justify-between">
+              <p className="text-gray-500">
+                We've found{" "}
+                <span className="text-purple-600 font-bold">523</span>jobs!
+              </p>
+              <p className="flex items-center gap-2 ">
+                Sort by:{" "}
+                <span className="text-purple-600 font-bold hover:cursor-pointer">
+                  Date
+                </span>
+                <RiArrowDownSLine />
+              </p>
+            </div>
+            {/* cards */}
+            <div>
+              {/* Icon */}
+              <div>
+                <RiDropboxFill />
+              </div>
+              {/* title */}
+              <div>
+                <h1>
+                  UX Designer <span>Remote</span>
+                  <span>Sketch</span>
+                </h1>
+                <p>Dropbox ---- Warzawa</p>
+              </div>
+                 {/* Time*/}
+                 <div>
+                  
+                 </div>
+            </div>
+          </div>
         </div>
       </div>
     </>
