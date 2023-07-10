@@ -15,6 +15,9 @@ import {
   RiFilter3Line,
   RiMapPinRangeLine,
   RiDropboxFill,
+  RiTwitchLine,
+  RiGoogleLine,
+  RiAmazonLine
 } from "react-icons/ri";
 
 function App() {
@@ -29,7 +32,7 @@ function App() {
       <div className="min-h-screen grid grid-col-1 lg:grid-cols-6 ">
         {/* Sidebar - Primer Bloque */}
         <div
-          className={`fixed lg:static w-[80%] md:w-[40%] lg:w-full top-0 z-50 bg-white transition-all  ${
+          className={`fixed lg:static w-[75%] md:w-[40%] lg:w-full top-0 z-50 bg-white transition-all  ${
             sidebar ? "-left-0" : "-left-full"
           } w-full h-full overflow-y-scroll col-span-1 p-8 border-r`}
         >
@@ -106,14 +109,14 @@ function App() {
         {/* Btn Menu movil */}
         <button
           onClick={handleSidebar}
-          className="block lg:hidden absolute bottom-4 right-4 bg-purple-600 p-2 text-white rounded-full text-2xl "
+          className="block lg:hidden fixed bottom-4 right-4 bg-purple-600 p-2 text-white rounded-full text-2xl z-40 "
         >
           {sidebar ? <RiCloseLine /> : <RiMenu3Fill />}
         </button>
         {/* Content - Segundo Bloque */}
         <div className="col-span-5">
           {/* Header */}
-          <header className="flex flex-col md:flex-row gap-4 items-center justify-between p-4 md:pl-8 lg:pl-12 w-full">
+          <header className="flex flex-col md:flex-row gap-4 items-center justify-between p-4 md:px-8 lg:px-12 w-full">
             {/* Search */}
             <form className="w-full md:[40%] lg:w-[30%] order-1 md:order-none">
               <div className="relative">
@@ -217,7 +220,7 @@ function App() {
             </div>
 
             {/* Results */}
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between mb-8">
               <p className="text-gray-500">
                 We've found{" "}
                 <span className="text-purple-600 font-bold">523</span>jobs!
@@ -231,24 +234,111 @@ function App() {
               </p>
             </div>
             {/* cards */}
-            <div>
+            <a
+              href="#"
+              className="bg-white rounded-2xl p-8 flex flex-col md:flex-row gap-8 w-full drop-shadow-lg border-2 border-transparent hover:border-purple-400 transition-all mb-4"
+            >
               {/* Icon */}
-              <div>
-                <RiDropboxFill />
+              <div className="w-full md:w-[10%] flex items-center  justify-start md:justify-center">
+                <RiDropboxFill className="text-7xl bg-purple-100 text-purple-600 p-4 rounded-md" />
               </div>
               {/* title */}
-              <div>
-                <h1>
-                  UX Designer <span>Remote</span>
-                  <span>Sketch</span>
+              <div className="w-full md:w-[70%]">
+                <h1 className="text-xl flex items-center gap-2">
+                  UX Designer{" "}
+                  <span className="text-xs py-1 px-2 bg-purple-100 text-purple-600 font-bold">
+                    Remote
+                  </span>
+                  <span className="text-xs py-1 px-2 bg-green-100 text-green-600 font-bold">
+                    Sketch
+                  </span>
                 </h1>
-                <p>Dropbox ---- Warzawa</p>
+                <p className="text-gray-500">Dropbox ---- Warzawa</p>
               </div>
-                 {/* Time*/}
-                 <div>
-                  
-                 </div>
-            </div>
+              {/* Time*/}
+              <div className="w-full md:w-[20%] flex flex-col items-end">
+                <h3 className="text-xl text-gray-500 mb-2">8.8 - 13.7k PLN</h3>
+                <p className="text-gray-500"> 2 days ago</p>
+              </div>
+            </a>
+            <a
+              href="#"
+              className="bg-white rounded-2xl p-8 flex flex-col md:flex-row gap-8 w-full drop-shadow-lg border-2 border-transparent hover:border-purple-400 transition-all mb-4"
+            >
+              {/* Icon */}
+              <div className="w-full md:w-[10%] flex items-center  justify-start md:justify-center">
+                <RiTwitchLine className="text-7xl bg-purple-100 text-purple-600 p-4 rounded-md" />
+              </div>
+              {/* title */}
+              <div className="w-full md:w-[70%]">
+                <h1 className="text-xl flex items-center gap-2">
+                  Product Designer{" "}
+                  <span className="text-xs py-1 px-2 bg-purple-100 text-purple-600 font-bold">
+                    Remote
+                  </span>                  
+                </h1>
+                <p className="text-gray-500">Twitch ---- Wroclaw</p>
+              </div>
+              {/* Time*/}
+              <div className="w-full md:w-[20%] flex flex-col items-end">
+                <h3 className="text-xl text-gray-500 mb-2">8.2 - 13.7k PLN</h3>
+                <p className="text-gray-500"> 2 days ago</p>
+              </div>
+            </a>
+            <a
+              href="#"
+              className="bg-white rounded-2xl p-8 flex flex-col md:flex-row gap-8 w-full drop-shadow-lg border-2 border-transparent hover:border-purple-400 transition-all mb-4"
+            >
+              {/* Icon */}
+              <div className="w-full md:w-[10%] flex items-center  justify-start md:justify-center">
+                <RiGoogleLine className="text-7xl bg-purple-100 text-purple-600 p-4 rounded-md" />
+              </div>
+              {/* title */}
+              <div className="w-full md:w-[70%]">
+                <h1 className="text-xl flex items-center gap-2">
+                  UX/UI Designer{" "}
+                  <span className="text-xs py-1 px-2 bg-purple-100 text-purple-600 font-bold">
+                    Remote
+                  </span>
+                  <span className="text-xs py-1 px-2 bg-yellow-100 text-yellow-600 font-bold">
+                    Javascript
+                  </span>
+                </h1>
+                <p className="text-gray-500">Google ---- Warzawa</p>
+              </div>
+              {/* Time*/}
+              <div className="w-full md:w-[20%] flex flex-col items-end">
+                <h3 className="text-xl text-gray-500 mb-2">8.8 - 13.7k PLN</h3>
+                <p className="text-gray-500"> 2 days ago</p>
+              </div>
+            </a>
+            <a
+              href="#"
+              className="bg-white rounded-2xl p-8 flex flex-col md:flex-row gap-8 w-full drop-shadow-lg border-2 border-transparent hover:border-purple-400 transition-all mb-4"
+            >
+              {/* Icon */}
+              <div className="w-full md:w-[10%] flex items-center  justify-start md:justify-center">
+                <RiAmazonLine className="text-7xl bg-purple-100 text-purple-600 p-4 rounded-md" />
+              </div>
+              {/* title */}
+              <div className="w-full md:w-[70%]">
+                <h1 className="text-xl flex items-center gap-2">
+                  Amazon Designer{" "}
+                  <span className="text-xs py-1 px-2 bg-purple-100 text-purple-600 font-bold">
+                    Remote
+                  </span>
+                  <span className="text-xs py-1 px-2 bg-red-100 text-red-600 font-bold">
+                    Adobe
+                  </span>
+                </h1>
+                <p className="text-gray-500">Amazon ---- Warzawa</p>
+              </div>
+              {/* Time*/}
+              <div className="w-full md:w-[20%] flex flex-col items-end">
+                <h3 className="text-xl text-gray-500 mb-2">8.8 - 13.7k PLN</h3>
+                <p className="text-gray-500"> 2 days ago</p>
+              </div>
+            </a>
           </div>
         </div>
       </div>
