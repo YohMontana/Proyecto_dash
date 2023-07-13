@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
 
-const ModeloA = () => {
+const ModeloB = () => {
   const [universidad, setUniversidad] = useState("");
 
   const handleInputChange = (event) => {
@@ -130,4 +130,4 @@ const ModeloA = () => {
   );
 };
 
-export default ModeloA;
+export default ModeloB;
