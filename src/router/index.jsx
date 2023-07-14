@@ -1,17 +1,18 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HomeView, LoginView, TramiteView } from "../pages";
-import { Layout } from "../components/layout";
+import { MainLayaout } from "../Layout/MainLayaout/index";
 
 const Router = () => {
     return(
-        <BrowserRouter>
-          <Layout> 
+        <BrowserRouter>           
             <Routes>
-                <Route path="/" element={<HomeView/>}/>
+                <Route element={<MainLayaout/>}>
+                    <Route path="/" element={<HomeView/>}/>
+                    <Route path="tramite" element={<TramiteView/>}/>
+                </Route>
                 <Route path="login" element={<LoginView/>}/>
-                <Route path="tramite" element={<TramiteView/>}/>
             </Routes>
-            </Layout>
+            
         </BrowserRouter>
     );
 }

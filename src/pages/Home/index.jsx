@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import Sidebar from "../../components/Sidebar";
-import Header from "../../components/Header";
-
 
 import {
-  RiMenu3Fill,
+  
   RiCloseLine,  
   RiArrowDownSLine,
   RiSearchLine,  
@@ -17,34 +14,24 @@ import {
 } from "react-icons/ri";
 
 const Home = () => {
-  const [sidebar, setSidebar] = useState(false);
-
-  const handleSidebar = () => {
-    setSidebar(!sidebar);
-  };
-
+  
   return (
     <>
       <div className="min-h-screen grid grid-col-1 lg:grid-cols-6 ">
         {/* Sidebar - Primer Bloque */}
-        <Sidebar sidebar={sidebar} handleSidebar={handleSidebar} />
+        
         {/* Btn Menu movil */}
-        <button
-          onClick={handleSidebar}
-          className="block lg:hidden fixed bottom-4 right-4 bg-purple-600 p-2 text-white rounded-full text-2xl z-40 "
-        >
-          {sidebar ? <RiCloseLine /> : <RiMenu3Fill />}
-        </button>
+        
 
         {/* Content - Segundo Bloque */}
-        <div className="col-span-5">
+        <div className="col-span-6">
           {/* Header */}
-          <Header/>
+          
           {/* Content */}
           <div className="p-4 md:p-8 lg:12 bg-gray-100">
             {/* Title  */}
             <div className="mb-8">
-              <h1 className="text-3xl font-semibold">Job Board</h1>
+              <h1 className="text-3xl font-semibold">Home</h1>
             </div>
             {/* Search */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center mb-6">
