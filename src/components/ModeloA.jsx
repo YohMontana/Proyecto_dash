@@ -1,12 +1,56 @@
 import React, { useState } from "react";
 import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
 
-const ModeloA = () => {
-  const [universidad, setUniversidad] = useState("");
 
-  const handleInputChange = (event) => {
-    setUniversidad(event.target.value);
-  };
+  const ModeloA = () => {
+    const [formValues, setFormValues] = useState({
+      envio: '',
+      fecha: '',
+      folios:'',
+      documento: '',
+      remitido: '',
+      asunto: '',
+      viceacade: '',
+      viceinve:'',
+      secre:'',
+      diga:'',
+      posgrado:'',
+      ciencias:'',
+      direccion:'',
+      direccion2:'',
+      oficina:'',
+      oficina2:'',
+      otro:'',
+      otro2:'',
+      accion: '',
+      conocimiento: '',
+      informar: '',
+      opinion: '',
+      corresponderle: '',
+      indicado: '',
+      respuesta: '',
+      resolucion: '',
+      presupuestal: '',
+      devolver: '',
+      verobs: '',
+      // Agrega aquí todos los inputs que necesites
+    });
+  
+    const handleInputChange = (event) => {
+      const { name, value, type, checked } = event.target;
+      const inputValue = type === 'checkbox' ? checked : value;
+      setFormValues((prevFormValues) => ({
+        ...prevFormValues,
+        [name]: inputValue,
+      }));
+    };
+  
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      // Aquí puedes realizar acciones con los valores del formulario
+      
+    };
+
   const handleGeneratePDF = () => {
     const doc = new jsPDF();
 
@@ -19,7 +63,7 @@ const ModeloA = () => {
     // Añadir titulo parte arriba
     doc.setFontSize(15);
     doc.text(
-        `UNIVERSIDAD NACIONAL DE EDUCACIÓN  ${universidad}`,
+      `UNIVERSIDAD NACIONAL DE EDUCACIÓN`,
       doc.internal.pageSize.getWidth() / 2,
       20,
       { align: "center" }
@@ -58,7 +102,7 @@ const ModeloA = () => {
     doc.setFontSize(12);
     doc.setFont("times", "normal");
     doc.text(
-      "Hoja de Envío N°: 1612-2023-R-UNE",
+      `Hoja de Envío N°: ${formValues.envio}-2023-R-UNE`,
       doc.internal.pageSize.getWidth() / 2,
       58,
       { align: "center" }
@@ -66,16 +110,16 @@ const ModeloA = () => {
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text("FECHA: 22 junio", 20, 70);
+    doc.text(`FECHA: ${formValues.fecha}`, 20, 70);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text("N° DE FOLIOS: 03", 130, 70);
+    doc.text(`N° DE FOLIOS: ${formValues.folios}`, 130, 70);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
     doc.text(
-      "DOCUMENTO: OFICIO No 2001-2023-MINEDU/VMGI-DRELM-UGEL05-ARH.",
+      `DOCUMENTO: ${formValues.documento}`,
       20,
       80
     );
@@ -86,12 +130,12 @@ const ModeloA = () => {
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text("REMITIDO POR: Área de Recursos Humanos - UGEL 05", 20, 95);
+    doc.text(`REMITIDO POR: ${formValues.remitido}`, 20, 95);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
     doc.text(
-      "ASUNTO: Procedimiento de fiscalización posterior - Carmen Rosa Castillo Ojeda",
+      `ASUNTO: ${formValues.asunto}`,
       20,
       105
     );
@@ -103,27 +147,27 @@ const ModeloA = () => {
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text("(   )  Vicerrectorado Académico", 20, 130);
+    doc.text(`${formValues.viceacade ? '(X)' : '(   )'}  Vicerrectorado Académico`, 20, 130);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text("(   )  Vicerrectorado de Investigación", 20, 135);
+    doc.text(`${formValues.viceinve ? '(X)' : '(   )'}  Vicerrectorado de Investigación`, 20, 135);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text("(   )  Secretaría General", 20, 140);
+    doc.text(`${formValues.secre ? '(X)' : '(   )'}  Secretaría General`, 20, 140);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text("(   )  DIGA", 20, 145);
+    doc.text(`${formValues.diga ? '(X)' : '(   )'}  DIGA`, 20, 145);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text("(   )  Escuela de Posgrado", 20, 150);
+    doc.text(`${formValues.posgrado ? '(X)' : '(   )'}  Escuela de Posgrado`, 20, 150);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text("(X)  Facultad de Ciencias Sociales y", 20, 155);
+    doc.text(`${formValues.ciencias ? '(X)' : '(   )'}  Facultad de Ciencias Sociales y`, 20, 155);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
@@ -131,16 +175,24 @@ const ModeloA = () => {
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text("(   )  Dirección ______________________", 20, 165);
+    doc.text(`${formValues.direccion ? '(X)' : '(   )'}  Dirección    ${formValues.direccion2} `, 20, 165);
+
+    doc.setLineWidth(0.3);
+    doc.line(47, 166, 100, 166);  
+    
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`${formValues.oficina ? '(X)' : '(   )'}  Oficina   ${formValues.oficina2} `, 20, 170);
+
+    doc.setLineWidth(0.3);
+    doc.line(42, 171, 100, 171);    
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text("(   )  Oficina ________________________", 20, 170);
+    doc.text(`${formValues.otro ? '(X)' : '(   )'}  Otro   ${formValues.otro2} `, 20, 175);
 
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text("Otro _________________________________", 20, 175);
-
+    doc.setLineWidth(0.3);
+    doc.line(37, 176, 100, 176);  
 
     //PARA:
     doc.setFontSize(12);
@@ -191,16 +243,14 @@ const ModeloA = () => {
     doc.setFont("times", "normal");
     doc.text("(   )  VER OBSERVACIONES", 110, 180);
 
-
     //OBSERVACIONES
     doc.setFontSize(12);
     doc.setFont("times", "bold");
-    doc.text("OBSERVACIONES:", 15, 195);    
+    doc.text("OBSERVACIONES:", 15, 195);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text("_________________________________________________", 15, 200);    
-
+    doc.text("_________________________________________________", 15, 200);
 
     // Guardar el PDF
     doc.save("ModeloA.pdf");
@@ -208,29 +258,521 @@ const ModeloA = () => {
 
   return (
     <>
-    <div>
-        <form action="">
-          <div>
-          
-            <label for="Hoja de Envío N°" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hoja de Envío N°</label>
-            <input type="number" id="N° envio" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[70%] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Hoja Envio" required/>
+      <div>
+        <form action="" onSubmit={handleSubmit}>
+          <div className="grid gap-6 mb-6 md:grid-cols-3">
+            <div>
+              <label
+                for="Hoja de Envío N°"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Envío N°
+              </label>
+              <input
+                type="number"
+                id="envio"
+                name="envio"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Hoja Envio"
+                value={formValues.envio}
+          onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="Fecha"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Fecha
+              </label>
+              <input
+                type="date"
+                id="fecha"
+                name="fecha"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Fecha"
+                value={formValues.fecha}
+          onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="N° Folios"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Folios
+              </label>
+              <input
+                type="number"
+                id="folios"
+                name="folios"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="N° Folios"
+                value={formValues.folios}
+          onChange={handleInputChange}
+                required
+              />
+            </div>
           </div>
-          
-        </form>
+          <div className="mb-6">
+            <label
+              for="documento"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Documento
+            </label>
+            <input
+              type="text"
+              id="documento"
+              name="documento"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Tipo de Documento"              
+          value={formValues.documento}
+          onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="mb-6">
+            <label
+              for="remitido"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Remitido por
+            </label>
+            <input
+              type="text"
+              id="remitido"
+              name="remitido"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Nombre del Área"
+              value={formValues.remitido}
+          onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="mb-6">
+            <label
+              for="asunto"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Asunto
+            </label>
+            <input
+              type="text"
+              id="asunto"
+              name="asunto"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="asunto"
+              value={formValues.asunto}
+          onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="grid gap-6 mb-6 md:grid-cols-2">
+            <div>
+              <h3 className="mb-4 font-semibold text-gray-900 dark:text-white">
+                PASE A:
+              </h3>
+              <ul className="w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                  <div className="flex items-center pl-3">
+                    <input
+                      id="viceacade"
+                      name="viceacade"
+                      type="checkbox"
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                      value={formValues.viceacade}
+                      onChange={handleInputChange}
+                    />
+                    <label
+                      for="viceacade"
+                      className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      Vicerrectorado Académico
+                    </label>
+                  </div>
+                </li>
+                <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                  <div className="flex items-center pl-3">
+                    <input
+                      id="viceinve"
+                      type="checkbox"
+                      name="viceinve"
+                      value={formValues.viceinve}
+                      onChange={handleInputChange}
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                    />
+                    <label
+                      for="viceinve"
+                      className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      Vicerrectorado de Investigación
+                    </label>
+                  </div>
+                </li>
+                <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                  <div className="flex items-center pl-3">
+                    <input
+                      id="secre"
+                      name="secre"
+                      type="checkbox"
+                      value={formValues.secre}
+                      onChange={handleInputChange}
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                    />
+                    <label
+                      for="angular-checkbox"
+                      className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      Secretaría General
+                    </label>
+                  </div>
+                </li>
+                <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                  <div className="flex items-center pl-3">
+                    <input
+                      id="diga"
+                      name="diga"
+                      type="checkbox"
+                      value={formValues.diga}
+                      onChange={handleInputChange}
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                    />
+                    <label
+                      for="laravel-checkbox"
+                      className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      DIGA
+                    </label>
+                  </div>
+                </li>
+                <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                  <div className="flex items-center pl-3">
+                    <input
+                      id="posgrado"
+                      name="posgrado"
+                      type="checkbox"
+                      value={formValues.posgrado}
+                      onChange={handleInputChange}
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                    />
+                    <label
+                      for="laravel-checkbox"
+                      className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      Escuela de Posgrado
+                    </label>
+                  </div>
+                </li>
+                <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                  <div className="flex items-center pl-3">
+                    <input
+                      id="ciencias"
+                      type="checkbox"
+                      name="ciencias"
+                      value={formValues.ciencias}
+                      onChange={handleInputChange}
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                    />
+                    <label
+                      for="laravel-checkbox"
+                      className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      Facultad de Ciencias Sociales y Humanidades
+                    </label>
+                  </div>
+                </li>
+                <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                  <div className="flex items-center pl-3">
+                    <input
+                      id="direccion"
+                      name="direccion"
+                      type="checkbox"
+                      value={formValues.direccion}
+                      onChange={handleInputChange}
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                    />
+                    <label
+                      for="laravel-checkbox"
+                      className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      Dirección
+                    </label>
+                    <input
+              type="text"
+              id="dirección2"
+              name="direccion2"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Nombre Dirección"
+              value={formValues.direccion2}
+                      onChange={handleInputChange}
+              required
+            />
+                  </div>
+                </li>
+                <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                  <div className="flex items-center pl-3">
+                    <input
+                      id="oficina"
+                      name="oficina"
+                      type="checkbox"
+                      value={formValues.oficina}
+                      onChange={handleInputChange}
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                    />
+                    <label
+                      for="laravel-checkbox"
+                      className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      Oficina
+                    </label>
+                    <input
+              type="text"
+              id="oficina2"
+              name="oficina2"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Nombre de Oficina"
+              value={formValues.oficina2}
+                      onChange={handleInputChange}
+              required
+            />
+                  </div>
+                </li>
+                <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                  <div className="flex items-center pl-3">
+                    <input
+                      id="otro"
+                      name="otro"
+                      type="checkbox"
+                      value={formValues.otro}
+                      onChange={handleInputChange}
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                    />
+                    <label
+                      for="laravel-checkbox"
+                      className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      Otro
+                    </label>
+                    <input
+              type="text"
+              id="otro2"
+              name="otro2"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Otro"
+              value={formValues.otro2}
+                      onChange={handleInputChange}
+              required
+            />
+                  </div>
+                </li>
+              </ul>
 
-
-
-
-      <label className="mt-5" htmlFor="universidad">Nombre de la universidad:</label>
-      <input
-        type="text"
-        id="universidad"
-        value={universidad}                                                                                                                                                                                                                                              
-        onChange={handleInputChange}
-      />
-      
-      <button onClick={handleGeneratePDF}>Generar PDF A</button>
-    </div>
+            </div>
+            <div>
+              <h3 className="mb-4 font-semibold text-gray-900 dark:text-white">
+                PARA:
+              </h3>
+              <ul className="w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                  <div className="flex items-center pl-3">
+                    <input
+                      id="vue-checkbox"
+                      type="checkbox"
+                      value=""
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                    />
+                    <label
+                      for="vue-checkbox"
+                      className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      Acción Necesaria
+                    </label>
+                  </div>
+                </li>
+                <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                  <div className="flex items-center pl-3">
+                    <input
+                      id="react-checkbox"
+                      type="checkbox"
+                      value=""
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                    />
+                    <label
+                      for="react-checkbox"
+                      className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      Conocimiento
+                    </label>
+                  </div>
+                </li>
+                <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                  <div className="flex items-center pl-3">
+                    <input
+                      id="angular-checkbox"
+                      type="checkbox"
+                      value=""
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                    />
+                    <label
+                      for="angular-checkbox"
+                      className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      Informar
+                    </label>
+                  </div>
+                </li>
+                <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                  <div className="flex items-center pl-3">
+                    <input
+                      id="laravel-checkbox"
+                      type="checkbox"
+                      value=""
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                    />
+                    <label
+                      for="laravel-checkbox"
+                      className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      Opinión Legal
+                    </label>
+                  </div>
+                </li>
+                <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                  <div className="flex items-center pl-3">
+                    <input
+                      id="laravel-checkbox"
+                      type="checkbox"
+                      value=""
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                    />
+                    <label
+                      for="laravel-checkbox"
+                      className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      Por corresponderle
+                    </label>
+                  </div>
+                </li>
+                <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                  <div className="flex items-center pl-3">
+                    <input
+                      id="laravel-checkbox"
+                      type="checkbox"
+                      value=""
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                    />
+                    <label
+                      for="laravel-checkbox"
+                      className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      Según lo indicado
+                    </label>
+                  </div>
+                </li>
+                <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                  <div className="flex items-center pl-3">
+                    <input
+                      id="laravel-checkbox"
+                      type="checkbox"
+                      value=""
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                    />
+                    <label
+                      for="laravel-checkbox"
+                      className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      Proyectar Respuesta
+                    </label>
+                  </div>
+                </li>
+                <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                  <div className="flex items-center pl-3">
+                    <input
+                      id="laravel-checkbox"
+                      type="checkbox"
+                      value=""
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                    />
+                    <label
+                      for="laravel-checkbox"
+                      className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      Proyectar Resolución
+                    </label>
+                  </div>
+                </li>
+                <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                  <div className="flex items-center pl-3">
+                    <input
+                      id="laravel-checkbox"
+                      type="checkbox"
+                      value=""
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                    />
+                    <label
+                      for="laravel-checkbox"
+                      className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      Previsión Presupuestal
+                    </label>
+                  </div>
+                </li>
+                <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                  <div className="flex items-center pl-3">
+                    <input
+                      id="laravel-checkbox"
+                      type="checkbox"
+                      value=""
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                    />
+                    <label
+                      for="laravel-checkbox"
+                      className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      Devolver
+                    </label>
+                  </div>
+                </li>
+                <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                  <div className="flex items-center pl-3">
+                    <input
+                      id="laravel-checkbox"
+                      type="checkbox"
+                      value=""
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                    />
+                    <label
+                      for="laravel-checkbox"
+                      className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      VER OBSERVACIONES
+                    </label>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="mb-6">
+            <label
+              for="documento"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              OBSERVACIONES
+            </label>
+            <input
+              type="text"
+              id="documento"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Colocar alguna Observación"
+              required
+            />
+          </div>
+        </form>       
+        <button type="button" onClick={handleGeneratePDF}>Generar PDF A</button>
+      </div>
     </>
   );
 };
