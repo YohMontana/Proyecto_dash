@@ -10,7 +10,7 @@ function Tramite() {
         </div>
         <div className="flex flex-wrap">
           {/* Esto es mi bloque 1 */}
-          <div className="w-[50%] pl-8">
+          <div className="w-[50%] pl-8 pr-8">
             <h1 className="text-xl font-semibold">Modelos de Envíos</h1>
 
             <h3 className="italic"><span className="hover:cursor-pointer font-bold text-blue-500">Click </span>Modelo A</h3>
