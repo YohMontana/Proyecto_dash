@@ -11,7 +11,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className={`fixed lg:static w-[70%] md:w-[40%] lg:w-full top-0 z-50 bg-white transition-all ${isOpen ? "-left-0" : "-left-full"
+      <div className={`fixed lg:static w-[65%] md:w-[40%] lg:w-full top-0 z-50 bg-white transition-all ${isOpen ? "-left-0" : "-left-full"
         } w-full h-full overflow-y-scroll col-span-1 p-5 border-r`}>
         {/* Logotipo */}
         <div className="text-center p-5 mt-032 flex flex-col items-center justify-center">
