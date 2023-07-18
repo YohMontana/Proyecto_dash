@@ -33,6 +33,7 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
       presupuestal: '',
       devolver: '',
       verobs: '',
+      observaciones: '',
       // Agrega aquí todos los inputs que necesites
     });
   
@@ -201,47 +202,47 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text("(X)  Acción Necesaria", 110, 130);
+    doc.text(`${formValues.accion ? '(X)' : '(   )'}  Acción Necesaria`, 110, 130);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text("(X)  Conocimiento", 110, 135);
+    doc.text(`${formValues.conocimiento ? '(X)' : '(   )'}  Conocimiento`, 110, 135);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text("(   )  Informar", 110, 140);
+    doc.text(`${formValues.informar ? '(X)' : '(   )'}  Informar`, 110, 140);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text("(   )  Opinión Legal", 110, 145);
+    doc.text(`${formValues.opinion ? '(X)' : '(   )'}  Opinión Legal`, 110, 145);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text("(   )  Por corresponderle", 110, 150);
+    doc.text(`${formValues.corresponderle ? '(X)' : '(   )'}  Por corresponderle`, 110, 150);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text("(   )  Según lo indicado", 110, 155);
+    doc.text(`${formValues.indicado ? '(X)' : '(   )'}  Según lo indicado`, 110, 155);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text("(   )  Proyectar Respuesta", 110, 160);
+    doc.text(`${formValues.respuesta ? '(X)' : '(   )'}  Proyectar Respuesta`, 110, 160);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text("(   )  Proyectar Resolución", 110, 165);
+    doc.text(`${formValues.resolucion ? '(X)' : '(   )'}  Proyectar Resolución`, 110, 165);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text("(   )  Previsión Presupuestal", 110, 170);
+    doc.text(`${formValues.presupuestal ? '(X)' : '(   )'}  Previsión Presupuestal`, 110, 170);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text("(   )  Devolver", 110, 175);
+    doc.text(`${formValues.devolver ? '(X)' : '(   )'}  Devolver`, 110, 175);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text("(   )  VER OBSERVACIONES", 110, 180);
+    doc.text(`${formValues.verobs ? '(X)' : '(   )'}  VER OBSERVACIONES`, 110, 180);
 
     //OBSERVACIONES
     doc.setFontSize(12);
@@ -250,7 +251,10 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text("_________________________________________________", 15, 200);
+    doc.text(`${formValues.observaciones}`, 15, 200);
+
+    doc.setLineWidth(0.3);
+    doc.line(15, 201, 100, 201);
 
     // Guardar el PDF
     doc.save("ModeloA.pdf");
@@ -579,9 +583,11 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                 <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
                   <div className="flex items-center pl-3">
                     <input
-                      id="vue-checkbox"
+                      id="accion"
+                      name="accion"
                       type="checkbox"
-                      value=""
+                      value={formValues.accion}
+                      onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
                     <label
@@ -595,9 +601,11 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                 <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
                   <div className="flex items-center pl-3">
                     <input
-                      id="react-checkbox"
+                      id="conocimiento"
+                      name="conocimiento"
                       type="checkbox"
-                      value=""
+                      value={formValues.conocimiento}
+                      onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
                     <label
@@ -611,9 +619,11 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                 <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
                   <div className="flex items-center pl-3">
                     <input
-                      id="angular-checkbox"
+                      id="informar"
+                      name="informar"
                       type="checkbox"
-                      value=""
+                      value={formValues.informar}
+                      onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
                     <label
@@ -627,9 +637,11 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                 <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
                   <div className="flex items-center pl-3">
                     <input
-                      id="laravel-checkbox"
+                      id="opinion"
+                      name="opinion"
                       type="checkbox"
-                      value=""
+                      value={formValues.opinion}
+                      onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
                     <label
@@ -643,9 +655,11 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                 <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
                   <div className="flex items-center pl-3">
                     <input
-                      id="laravel-checkbox"
+                      id="corresponderle"
+                      name="corresponderle"
                       type="checkbox"
-                      value=""
+                      value={formValues.corresponderle}
+                      onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
                     <label
@@ -659,9 +673,11 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                 <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
                   <div className="flex items-center pl-3">
                     <input
-                      id="laravel-checkbox"
+                      id="indicado"
+                      name="indicado"
                       type="checkbox"
-                      value=""
+                      value={formValues.indicado}
+                      onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
                     <label
@@ -675,9 +691,11 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                 <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
                   <div className="flex items-center pl-3">
                     <input
-                      id="laravel-checkbox"
+                      id="respuesta"
+                      name="respuesta"
                       type="checkbox"
-                      value=""
+                      value={formValues.respuesta}
+                      onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
                     <label
@@ -691,9 +709,11 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                 <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
                   <div className="flex items-center pl-3">
                     <input
-                      id="laravel-checkbox"
+                      id="resolucion"
+                      name="resolucion"
                       type="checkbox"
-                      value=""
+                      value={formValues.resolucion}
+                      onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
                     <label
@@ -707,9 +727,11 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                 <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
                   <div className="flex items-center pl-3">
                     <input
-                      id="laravel-checkbox"
+                      id="presupuestal"
+                      name="presupuestal"
                       type="checkbox"
-                      value=""
+                      value={formValues.presupuestal}
+                      onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
                     <label
@@ -723,9 +745,11 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                 <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
                   <div className="flex items-center pl-3">
                     <input
-                      id="laravel-checkbox"
+                      id="devolver"
+                      name="devolver"
                       type="checkbox"
-                      value=""
+                      value={formValues.devolver}
+                      onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
                     <label
@@ -739,9 +763,11 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                 <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
                   <div className="flex items-center pl-3">
                     <input
-                      id="laravel-checkbox"
+                      id="verobs"
+                      name="verobs"
                       type="checkbox"
-                      value=""
+                      value={formValues.verobs}
+                      onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
                     <label
@@ -764,14 +790,17 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
             </label>
             <input
               type="text"
-              id="documento"
+              id="observaciones"
+              name="observaciones"
+              value={formValues.observaciones}
+                      onChange={handleInputChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Colocar alguna Observación"
               required
             />
           </div>
         </form>       
-        <button type="button" onClick={handleGeneratePDF}>Generar PDF A</button>
+        <button type="button" onClick={handleGeneratePDF} className="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Generar PDF A</button>
       </div>
     </>
   );
