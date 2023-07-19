@@ -1,8 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
-
+import VisualizadorPDF from "./VisualizadorPDF";
 
   const ModeloA = () => {
+    const initialFormValues = {
+      envio: "",
+      fecha: "",
+      folios: "",
+      documento: "",
+      remitido: "",
+      asunto: "",
+      viceacade: false,
+      viceinve: false,
+      secre: false,
+      diga: false,
+      posgrado: false,
+      ciencias: false,
+      direccion: false,
+      direccion2: "",
+      oficina: false,
+      oficina2: "",
+      otro: false,
+      otro2: "",
+      accion: "",
+      conocimiento: "",
+      informar: "",
+      opinion: "",
+      corresponderle: "",
+      indicado: "",
+      respuesta: "",
+      resolucion: "",
+      presupuestal: "",
+      devolver: "",
+      verobs: "",
+      observaciones: "",
+      // Agrega aquí todos los inputs que necesites
+    };
     const [formValues, setFormValues] = useState({
       envio: '',
       fecha: '',
@@ -36,7 +69,9 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
       observaciones: '',
       // Agrega aquí todos los inputs que necesites
     });
-  
+
+    const [outputUrl, setOutputUrl] = useState("");
+
     const handleInputChange = (event) => {
       const { name, value, type, checked } = event.target;
       const inputValue = type === 'checkbox' ? checked : value;
@@ -46,223 +81,448 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
       }));
     };
   
+    const generatePDF = () => {
+      const doc = new jsPDF();
+  
+      // Crear instancia de jsPDF
+  
+      doc.addFont("times", "normal", "WinAnsiEncoding");
+      // Definir el estilo de fuente
+      doc.setFont("times", "bold");
+  
+      // Añadir titulo parte arriba
+      doc.setFontSize(15);
+      doc.text(
+        `UNIVERSIDAD NACIONAL DE EDUCACIÓN`,
+        doc.internal.pageSize.getWidth() / 2,
+        20,
+        { align: "center" }
+      );
+  
+      doc.setFontSize(14);
+      doc.text(
+        "Enrique Guzmán y Valle",
+        doc.internal.pageSize.getWidth() / 2,
+        25,
+        { align: "center" }
+      );
+  
+      doc.setFontSize(14);
+      doc.setFont("times", "bolditalic");
+      doc.text(
+        `"Alma Máter del Magisterio Nacional"`,
+        doc.internal.pageSize.getWidth() / 2,
+        30,
+        { align: "center" }
+      );
+  
+      doc.setFontSize(14);
+      doc.setFont("times", "bold");
+      doc.text("RECTORADO", doc.internal.pageSize.getWidth() / 2, 35, {
+        align: "center",
+      });
+      //Añadir imagen
+      let imgData =
+        "https://upload.wikimedia.org/wikipedia/commons/0/08/Escudo_UNE.png";
+      doc.addImage(imgData, "PNG", 102, 36, 8, 12, { align: "center" });
+      //Añadir linea
+      doc.setLineWidth(0.5);
+      doc.line(20, 50, 190, 50);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(
+        `Hoja de Envío N°: ${formValues.envio}-2023-R-UNE`,
+        doc.internal.pageSize.getWidth() / 2,
+        58,
+        { align: "center" }
+      );
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`FECHA: ${formValues.fecha}`, 20, 70);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`N° DE FOLIOS: ${formValues.folios}`, 130, 70);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(
+        `DOCUMENTO: ${formValues.documento}`,
+        20,
+        80
+      );
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text("MPV-EPP-740-23.", 20, 85);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`REMITIDO POR: ${formValues.remitido}`, 20, 95);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(
+        `ASUNTO: ${formValues.asunto}`,
+        20,
+        105
+      );
+  
+      //PASE A:
+      doc.setFontSize(12);
+      doc.setFont("times", "bold");
+      doc.text("PASE A:", 20, 115);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.viceacade ? '(X)' : '(   )'}  Vicerrectorado Académico`, 20, 130);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.viceinve ? '(X)' : '(   )'}  Vicerrectorado de Investigación`, 20, 135);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.secre ? '(X)' : '(   )'}  Secretaría General`, 20, 140);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.diga ? '(X)' : '(   )'}  DIGA`, 20, 145);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.posgrado ? '(X)' : '(   )'}  Escuela de Posgrado`, 20, 150);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.ciencias ? '(X)' : '(   )'}  Facultad de Ciencias Sociales y`, 20, 155);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text("Humanidades", 28, 160);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.direccion ? '(X)' : '(   )'}  Dirección    ${formValues.direccion2} `, 20, 165);
+  
+      doc.setLineWidth(0.3);
+      doc.line(47, 166, 100, 166);  
+      
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.oficina ? '(X)' : '(   )'}  Oficina   ${formValues.oficina2} `, 20, 170);
+  
+      doc.setLineWidth(0.3);
+      doc.line(42, 171, 100, 171);    
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.otro ? '(X)' : '(   )'}  Otro   ${formValues.otro2} `, 20, 175);
+  
+      doc.setLineWidth(0.3);
+      doc.line(37, 176, 100, 176);  
+  
+      //PARA:
+      doc.setFontSize(12);
+      doc.setFont("times", "bold");
+      doc.text("PARA:", 110, 115);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.accion ? '(X)' : '(   )'}  Acción Necesaria`, 110, 130);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.conocimiento ? '(X)' : '(   )'}  Conocimiento`, 110, 135);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.informar ? '(X)' : '(   )'}  Informar`, 110, 140);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.opinion ? '(X)' : '(   )'}  Opinión Legal`, 110, 145);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.corresponderle ? '(X)' : '(   )'}  Por corresponderle`, 110, 150);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.indicado ? '(X)' : '(   )'}  Según lo indicado`, 110, 155);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.respuesta ? '(X)' : '(   )'}  Proyectar Respuesta`, 110, 160);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.resolucion ? '(X)' : '(   )'}  Proyectar Resolución`, 110, 165);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.presupuestal ? '(X)' : '(   )'}  Previsión Presupuestal`, 110, 170);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.devolver ? '(X)' : '(   )'}  Devolver`, 110, 175);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.verobs ? '(X)' : '(   )'}  VER OBSERVACIONES`, 110, 180);
+  
+      //OBSERVACIONES
+      doc.setFontSize(12);
+      doc.setFont("times", "bold");
+      doc.text("OBSERVACIONES:", 15, 195);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.observaciones}`, 15, 200);
+  
+      doc.setLineWidth(0.3);
+      doc.line(15, 201, 100, 201);
+  
+      // Guardar el PDF
+      // doc.save("ModeloA.pdf");
+
+      // Actualizar el estado con la URL del PDF
+    const pdfUrl = doc.output("bloburl");
+    setOutputUrl(pdfUrl);
+    };
+
+    const handleGeneratePDF = () => {
+      const doc = new jsPDF();
+  
+      // Crear instancia de jsPDF
+  
+      doc.addFont("times", "normal", "WinAnsiEncoding");
+      // Definir el estilo de fuente
+      doc.setFont("times", "bold");
+  
+      // Añadir titulo parte arriba
+      doc.setFontSize(15);
+      doc.text(
+        `UNIVERSIDAD NACIONAL DE EDUCACIÓN`,
+        doc.internal.pageSize.getWidth() / 2,
+        20,
+        { align: "center" }
+      );
+  
+      doc.setFontSize(14);
+      doc.text(
+        "Enrique Guzmán y Valle",
+        doc.internal.pageSize.getWidth() / 2,
+        25,
+        { align: "center" }
+      );
+  
+      doc.setFontSize(14);
+      doc.setFont("times", "bolditalic");
+      doc.text(
+        `"Alma Máter del Magisterio Nacional"`,
+        doc.internal.pageSize.getWidth() / 2,
+        30,
+        { align: "center" }
+      );
+  
+      doc.setFontSize(14);
+      doc.setFont("times", "bold");
+      doc.text("RECTORADO", doc.internal.pageSize.getWidth() / 2, 35, {
+        align: "center",
+      });
+      //Añadir imagen
+      let imgData =
+        "https://upload.wikimedia.org/wikipedia/commons/0/08/Escudo_UNE.png";
+      doc.addImage(imgData, "PNG", 102, 36, 8, 12, { align: "center" });
+      //Añadir linea
+      doc.setLineWidth(0.5);
+      doc.line(20, 50, 190, 50);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(
+        `Hoja de Envío N°: ${formValues.envio}-2023-R-UNE`,
+        doc.internal.pageSize.getWidth() / 2,
+        58,
+        { align: "center" }
+      );
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`FECHA: ${formValues.fecha}`, 20, 70);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`N° DE FOLIOS: ${formValues.folios}`, 130, 70);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(
+        `DOCUMENTO: ${formValues.documento}`,
+        20,
+        80
+      );
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text("MPV-EPP-740-23.", 20, 85);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`REMITIDO POR: ${formValues.remitido}`, 20, 95);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(
+        `ASUNTO: ${formValues.asunto}`,
+        20,
+        105
+      );
+  
+      //PASE A:
+      doc.setFontSize(12);
+      doc.setFont("times", "bold");
+      doc.text("PASE A:", 20, 115);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.viceacade ? '(X)' : '(   )'}  Vicerrectorado Académico`, 20, 130);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.viceinve ? '(X)' : '(   )'}  Vicerrectorado de Investigación`, 20, 135);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.secre ? '(X)' : '(   )'}  Secretaría General`, 20, 140);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.diga ? '(X)' : '(   )'}  DIGA`, 20, 145);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.posgrado ? '(X)' : '(   )'}  Escuela de Posgrado`, 20, 150);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.ciencias ? '(X)' : '(   )'}  Facultad de Ciencias Sociales y`, 20, 155);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text("Humanidades", 28, 160);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.direccion ? '(X)' : '(   )'}  Dirección    ${formValues.direccion2} `, 20, 165);
+  
+      doc.setLineWidth(0.3);
+      doc.line(47, 166, 100, 166);  
+      
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.oficina ? '(X)' : '(   )'}  Oficina   ${formValues.oficina2} `, 20, 170);
+  
+      doc.setLineWidth(0.3);
+      doc.line(42, 171, 100, 171);    
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.otro ? '(X)' : '(   )'}  Otro   ${formValues.otro2} `, 20, 175);
+  
+      doc.setLineWidth(0.3);
+      doc.line(37, 176, 100, 176);  
+  
+      //PARA:
+      doc.setFontSize(12);
+      doc.setFont("times", "bold");
+      doc.text("PARA:", 110, 115);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.accion ? '(X)' : '(   )'}  Acción Necesaria`, 110, 130);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.conocimiento ? '(X)' : '(   )'}  Conocimiento`, 110, 135);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.informar ? '(X)' : '(   )'}  Informar`, 110, 140);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.opinion ? '(X)' : '(   )'}  Opinión Legal`, 110, 145);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.corresponderle ? '(X)' : '(   )'}  Por corresponderle`, 110, 150);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.indicado ? '(X)' : '(   )'}  Según lo indicado`, 110, 155);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.respuesta ? '(X)' : '(   )'}  Proyectar Respuesta`, 110, 160);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.resolucion ? '(X)' : '(   )'}  Proyectar Resolución`, 110, 165);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.presupuestal ? '(X)' : '(   )'}  Previsión Presupuestal`, 110, 170);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.devolver ? '(X)' : '(   )'}  Devolver`, 110, 175);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.verobs ? '(X)' : '(   )'}  VER OBSERVACIONES`, 110, 180);
+  
+      //OBSERVACIONES
+      doc.setFontSize(12);
+      doc.setFont("times", "bold");
+      doc.text("OBSERVACIONES:", 15, 195);
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.observaciones}`, 15, 200);
+  
+      doc.setLineWidth(0.3);
+      doc.line(15, 201, 100, 201);
+  
+      // Guardar el PDF
+      doc.save("ModeloA.pdf");
+      // Resetear los valores del formulario
+    resetFormValues();
+    };
+
+    const resetFormValues = () => {
+      console.log("Resetting form values");
+      setFormValues(initialFormValues);
+    };
+
+    useEffect(() => {
+      generatePDF();
+    }, [formValues]); // Ejecutar generatePDF cada vez que formValues cambie
+  
+
     const handleSubmit = (event) => {
       event.preventDefault();
       // Aquí puedes realizar acciones con los valores del formulario
       
     };
 
-  const handleGeneratePDF = () => {
-    const doc = new jsPDF();
-
-    // Crear instancia de jsPDF
-
-    doc.addFont("times", "normal", "WinAnsiEncoding");
-    // Definir el estilo de fuente
-    doc.setFont("times", "bold");
-
-    // Añadir titulo parte arriba
-    doc.setFontSize(15);
-    doc.text(
-      `UNIVERSIDAD NACIONAL DE EDUCACIÓN`,
-      doc.internal.pageSize.getWidth() / 2,
-      20,
-      { align: "center" }
-    );
-
-    doc.setFontSize(14);
-    doc.text(
-      "Enrique Guzmán y Valle",
-      doc.internal.pageSize.getWidth() / 2,
-      25,
-      { align: "center" }
-    );
-
-    doc.setFontSize(14);
-    doc.setFont("times", "bolditalic");
-    doc.text(
-      `"Alma Máter del Magisterio Nacional"`,
-      doc.internal.pageSize.getWidth() / 2,
-      30,
-      { align: "center" }
-    );
-
-    doc.setFontSize(14);
-    doc.setFont("times", "bold");
-    doc.text("RECTORADO", doc.internal.pageSize.getWidth() / 2, 35, {
-      align: "center",
-    });
-    //Añadir imagen
-    let imgData =
-      "https://upload.wikimedia.org/wikipedia/commons/0/08/Escudo_UNE.png";
-    doc.addImage(imgData, "PNG", 102, 36, 8, 12, { align: "center" });
-    //Añadir linea
-    doc.setLineWidth(0.5);
-    doc.line(20, 50, 190, 50);
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(
-      `Hoja de Envío N°: ${formValues.envio}-2023-R-UNE`,
-      doc.internal.pageSize.getWidth() / 2,
-      58,
-      { align: "center" }
-    );
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(`FECHA: ${formValues.fecha}`, 20, 70);
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(`N° DE FOLIOS: ${formValues.folios}`, 130, 70);
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(
-      `DOCUMENTO: ${formValues.documento}`,
-      20,
-      80
-    );
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text("MPV-EPP-740-23.", 20, 85);
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(`REMITIDO POR: ${formValues.remitido}`, 20, 95);
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(
-      `ASUNTO: ${formValues.asunto}`,
-      20,
-      105
-    );
-
-    //PASE A:
-    doc.setFontSize(12);
-    doc.setFont("times", "bold");
-    doc.text("PASE A:", 20, 115);
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(`${formValues.viceacade ? '(X)' : '(   )'}  Vicerrectorado Académico`, 20, 130);
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(`${formValues.viceinve ? '(X)' : '(   )'}  Vicerrectorado de Investigación`, 20, 135);
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(`${formValues.secre ? '(X)' : '(   )'}  Secretaría General`, 20, 140);
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(`${formValues.diga ? '(X)' : '(   )'}  DIGA`, 20, 145);
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(`${formValues.posgrado ? '(X)' : '(   )'}  Escuela de Posgrado`, 20, 150);
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(`${formValues.ciencias ? '(X)' : '(   )'}  Facultad de Ciencias Sociales y`, 20, 155);
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text("Humanidades", 28, 160);
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(`${formValues.direccion ? '(X)' : '(   )'}  Dirección    ${formValues.direccion2} `, 20, 165);
-
-    doc.setLineWidth(0.3);
-    doc.line(47, 166, 100, 166);  
-    
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(`${formValues.oficina ? '(X)' : '(   )'}  Oficina   ${formValues.oficina2} `, 20, 170);
-
-    doc.setLineWidth(0.3);
-    doc.line(42, 171, 100, 171);    
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(`${formValues.otro ? '(X)' : '(   )'}  Otro   ${formValues.otro2} `, 20, 175);
-
-    doc.setLineWidth(0.3);
-    doc.line(37, 176, 100, 176);  
-
-    //PARA:
-    doc.setFontSize(12);
-    doc.setFont("times", "bold");
-    doc.text("PARA:", 110, 115);
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(`${formValues.accion ? '(X)' : '(   )'}  Acción Necesaria`, 110, 130);
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(`${formValues.conocimiento ? '(X)' : '(   )'}  Conocimiento`, 110, 135);
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(`${formValues.informar ? '(X)' : '(   )'}  Informar`, 110, 140);
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(`${formValues.opinion ? '(X)' : '(   )'}  Opinión Legal`, 110, 145);
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(`${formValues.corresponderle ? '(X)' : '(   )'}  Por corresponderle`, 110, 150);
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(`${formValues.indicado ? '(X)' : '(   )'}  Según lo indicado`, 110, 155);
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(`${formValues.respuesta ? '(X)' : '(   )'}  Proyectar Respuesta`, 110, 160);
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(`${formValues.resolucion ? '(X)' : '(   )'}  Proyectar Resolución`, 110, 165);
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(`${formValues.presupuestal ? '(X)' : '(   )'}  Previsión Presupuestal`, 110, 170);
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(`${formValues.devolver ? '(X)' : '(   )'}  Devolver`, 110, 175);
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(`${formValues.verobs ? '(X)' : '(   )'}  VER OBSERVACIONES`, 110, 180);
-
-    //OBSERVACIONES
-    doc.setFontSize(12);
-    doc.setFont("times", "bold");
-    doc.text("OBSERVACIONES:", 15, 195);
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(`${formValues.observaciones}`, 15, 200);
-
-    doc.setLineWidth(0.3);
-    doc.line(15, 201, 100, 201);
-
-    // Guardar el PDF
-    doc.save("ModeloA.pdf");
-  };
 
   return (
-    <>
-      <div>
+    <div className="grid gap-6 mb-6 md:grid-cols-2">
+      <div className="w-full">
         <form action="" onSubmit={handleSubmit}>
           <div className="grid gap-6 mb-6 md:grid-cols-3">
             <div>
@@ -387,7 +647,7 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                       name="viceacade"
                       type="checkbox"
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                      value={formValues.viceacade}
+                      checked={formValues.viceacade}
                       onChange={handleInputChange}
                     />
                     <label
@@ -404,7 +664,7 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                       id="viceinve"
                       type="checkbox"
                       name="viceinve"
-                      value={formValues.viceinve}
+                      checked={formValues.viceinve}
                       onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
@@ -422,7 +682,7 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                       id="secre"
                       name="secre"
                       type="checkbox"
-                      value={formValues.secre}
+                      checked={formValues.secre}
                       onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
@@ -440,7 +700,7 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                       id="diga"
                       name="diga"
                       type="checkbox"
-                      value={formValues.diga}
+                      checked={formValues.diga}
                       onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
@@ -458,7 +718,7 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                       id="posgrado"
                       name="posgrado"
                       type="checkbox"
-                      value={formValues.posgrado}
+                      checked={formValues.posgrado}
                       onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
@@ -476,7 +736,7 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                       id="ciencias"
                       type="checkbox"
                       name="ciencias"
-                      value={formValues.ciencias}
+                      checked={formValues.ciencias}
                       onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
@@ -494,7 +754,7 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                       id="direccion"
                       name="direccion"
                       type="checkbox"
-                      value={formValues.direccion}
+                      checked={formValues.direccion}
                       onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
@@ -522,7 +782,7 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                       id="oficina"
                       name="oficina"
                       type="checkbox"
-                      value={formValues.oficina}
+                      checked={formValues.oficina}
                       onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
@@ -550,7 +810,7 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                       id="otro"
                       name="otro"
                       type="checkbox"
-                      value={formValues.otro}
+                      checked={formValues.otro}
                       onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
@@ -586,7 +846,7 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                       id="accion"
                       name="accion"
                       type="checkbox"
-                      value={formValues.accion}
+                      checked={formValues.accion}
                       onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
@@ -604,7 +864,7 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                       id="conocimiento"
                       name="conocimiento"
                       type="checkbox"
-                      value={formValues.conocimiento}
+                      checked={formValues.conocimiento}
                       onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
@@ -622,7 +882,7 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                       id="informar"
                       name="informar"
                       type="checkbox"
-                      value={formValues.informar}
+                      checked={formValues.informar}
                       onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
@@ -640,7 +900,7 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                       id="opinion"
                       name="opinion"
                       type="checkbox"
-                      value={formValues.opinion}
+                      checked={formValues.opinion}
                       onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
@@ -658,7 +918,7 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                       id="corresponderle"
                       name="corresponderle"
                       type="checkbox"
-                      value={formValues.corresponderle}
+                      checked={formValues.corresponderle}
                       onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
@@ -676,7 +936,7 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                       id="indicado"
                       name="indicado"
                       type="checkbox"
-                      value={formValues.indicado}
+                      checked={formValues.indicado}
                       onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
@@ -694,7 +954,7 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                       id="respuesta"
                       name="respuesta"
                       type="checkbox"
-                      value={formValues.respuesta}
+                      checked={formValues.respuesta}
                       onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
@@ -712,7 +972,7 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                       id="resolucion"
                       name="resolucion"
                       type="checkbox"
-                      value={formValues.resolucion}
+                      checked={formValues.resolucion}
                       onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
@@ -730,7 +990,7 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                       id="presupuestal"
                       name="presupuestal"
                       type="checkbox"
-                      value={formValues.presupuestal}
+                      checked={formValues.presupuestal}
                       onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
@@ -748,7 +1008,7 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                       id="devolver"
                       name="devolver"
                       type="checkbox"
-                      value={formValues.devolver}
+                      checked={formValues.devolver}
                       onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
@@ -766,7 +1026,7 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
                       id="verobs"
                       name="verobs"
                       type="checkbox"
-                      value={formValues.verobs}
+                      checked={formValues.verobs}
                       onChange={handleInputChange}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
@@ -800,9 +1060,10 @@ import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
             />
           </div>
         </form>       
-        <button type="button" onClick={handleGeneratePDF} className="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Generar PDF A</button>
+        <button type="submit" onClick={handleGeneratePDF} className="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Generar PDF A</button>
       </div>
-    </>
+      <VisualizadorPDF url={outputUrl} />
+    </div>
   );
 };
 

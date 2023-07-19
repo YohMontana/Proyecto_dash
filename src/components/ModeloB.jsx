@@ -25,7 +25,7 @@ const ModeloB = () => {
     }));
   };
 
-  const handleGeneratePDF = () => {
+  const generatePDF = () => {
     const doc = new jsPDF();
 
     // Crear instancia de jsPDF
@@ -133,12 +133,141 @@ const ModeloB = () => {
     doc.line(20, 176, 190, 176);
 
     // Guardar el PDF
-    doc.save("ModeloB.pdf");
+    // doc.save("ModeloB.pdf");
 
     // Actualizar el estado con la URL del PDF
     const pdfUrl = doc.output("bloburl");
     setOutputUrl(pdfUrl);
+
+    
   };
+  
+  const handleGeneratePDF = () => {
+    const doc = new jsPDF();
+    // Crear instancia de jsPDF
+
+    doc.addFont("times", "normal", "WinAnsiEncoding");
+    // Definir el estilo de fuente
+    doc.setFont("times", "bold");
+
+    // Añadir titulo parte arriba
+    doc.setFontSize(15);
+    doc.text(
+      `UNIVERSIDAD NACIONAL DE EDUCACIÓN`,
+      doc.internal.pageSize.getWidth() / 2,
+      20,
+      { align: "center" }
+    );
+
+    doc.setFontSize(14);
+    doc.text(
+      "Enrique Guzmán y Valle",
+      doc.internal.pageSize.getWidth() / 2,
+      25,
+      { align: "center" }
+    );
+
+    doc.setFontSize(14);
+    doc.setFont("times", "bolditalic");
+    doc.text(
+      `"Alma Máter del Magisterio Nacional"`,
+      doc.internal.pageSize.getWidth() / 2,
+      30,
+      { align: "center" }
+    );
+
+    //Añadir imagen
+    let imgData =
+      "https://upload.wikimedia.org/wikipedia/commons/0/08/Escudo_UNE.png";
+    doc.addImage(imgData, "PNG", 102, 35, 8, 12, { align: "center" });
+
+    doc.setFontSize(14);
+    doc.setFont("times", "bold");
+    doc.text("RECTORADO", doc.internal.pageSize.getWidth() / 2, 55, {
+      align: "center",
+    });
+
+    //Añadir linea
+    doc.setLineWidth(0.5);
+    doc.line(50, 60, 155, 60);
+
+    doc.setFontSize(14);
+    doc.text("HOJA DE TRÁMITE", doc.internal.pageSize.getWidth() / 2, 90, {
+      align: "center",
+    });
+
+    doc.setFontSize(14);
+    doc.text(
+      "CONSEJO UNIVERSITARIO",
+      doc.internal.pageSize.getWidth() / 2,
+      95,
+      { align: "center" }
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `N°: ${formValues.envio2}-2023-R-UNE`,
+      doc.internal.pageSize.getWidth() / 2,
+      110,
+      { align: "center" }
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`FECHA: ${formValues.fecha2}`, 20, 120);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`N° DE FOLIOS: ${formValues.folios2}`, 130, 120);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`DOCUMENTO: ${formValues.documento2}`, 20, 130);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`REMITIDO POR: ${formValues.remitido2}`, 20, 140);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`ASUNTO: ${formValues.asunto2}`, 20, 150);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "bold");
+    doc.text("PASE AL CONSEJO UNIVERSITARIO PARA SU TRATAMIENTO.", 20, 160);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "bold");
+    doc.text("OBSERVACIONES:", 20, 170);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`${formValues.observaciones2}`, 20, 175);
+
+    doc.setLineWidth(0.5);
+    doc.line(20, 176, 190, 176);
+    doc.save("ModeloB.pdf");    
+
+    // Resetear los valores del formulario
+    resetFormValues();
+  };
+
+  const resetFormValues = () => {
+    setFormValues({
+      envio2: "",
+      fecha2: "",
+      folios2: "",
+      documento2: "",
+      remitido2: "",
+      asunto2: "",
+      observaciones2: "",
+    });
+  };
+  
+  useEffect(() => {
+    generatePDF();
+  }, [formValues]); // Ejecutar generatePDF cada vez que formValues cambie
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -279,7 +408,7 @@ const ModeloB = () => {
           </div>
         </form>
         <button
-          type="button"
+          type="submit"
           onClick={handleGeneratePDF}
           className="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
         >

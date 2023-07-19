@@ -4,7 +4,7 @@ const VisualizadorPDF = ({ url }) => {
         
         <iframe
           title="VisualizadorPDF"
-          style={{ width: "100vh", height: "100vh" }}
+          style={{ width: "800px", height: "1100px" }}
           src={url}
         />
       </div>
