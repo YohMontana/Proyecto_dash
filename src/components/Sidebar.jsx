@@ -45,13 +45,13 @@ const Sidebar = () => {
                 </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to={"/Correo"}
                   className="flex items-center gap-4 hover:bg-purple-500 p-4 text-gray-400 hover:text-white rounded-lg transition-colors font-semibold"
                 >
                   <RiCalendar2Line />
-                  Shedule
-                </a>
+                  Correo
+                </Link>
               </li>
               <li>
                 <a

@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { HomeView, LoginView, TramiteView } from "../pages";
+import { CorreoView, HomeView, LoginView, TramiteView } from "../pages";
 import { MainLayaout } from "../Layout/MainLayaout/index";
 
 const Router = () => {
@@ -9,6 +9,7 @@ const Router = () => {
                 <Route element={<MainLayaout/>}>
                     <Route path="/" element={<HomeView/>}/>
                     <Route path="tramite" element={<TramiteView/>}/>
+                    <Route path="correo" element={<CorreoView/>}/>
                 </Route>
                 <Route path="login" element={<LoginView/>}/>
             </Routes>
