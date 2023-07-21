@@ -2,523 +2,752 @@ import React, { useState, useEffect } from "react";
 import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
 import VisualizadorPDF from "./VisualizadorPDF";
 
-  const ModeloA = () => {
-    const initialFormValues = {
-      envio: "",
-      fecha: "",
-      folios: "",
-      documento: "",
-      remitido: "",
-      asunto: "",
-      viceacade: false,
-      viceinve: false,
-      secre: false,
-      diga: false,
-      posgrado: false,
-      ciencias: false,
-      direccion: false,
-      direccion2: "",
-      oficina: false,
-      oficina2: "",
-      otro: false,
-      otro2: "",
-      accion: "",
-      conocimiento: "",
-      informar: "",
-      opinion: "",
-      corresponderle: "",
-      indicado: "",
-      respuesta: "",
-      resolucion: "",
-      presupuestal: "",
-      devolver: "",
-      verobs: "",
-      observaciones: "",
-      // Agrega aquí todos los inputs que necesites
-    };
-    const [formValues, setFormValues] = useState({
-      envio: '',
-      fecha: '',
-      folios:'',
-      documento: '',
-      remitido: '',
-      asunto: '',
-      viceacade: '',
-      viceinve:'',
-      secre:'',
-      diga:'',
-      posgrado:'',
-      ciencias:'',
-      direccion:'',
-      direccion2:'',
-      oficina:'',
-      oficina2:'',
-      otro:'',
-      otro2:'',
-      accion: '',
-      conocimiento: '',
-      informar: '',
-      opinion: '',
-      corresponderle: '',
-      indicado: '',
-      respuesta: '',
-      resolucion: '',
-      presupuestal: '',
-      devolver: '',
-      verobs: '',
-      observaciones: '',
-      // Agrega aquí todos los inputs que necesites
+const ModeloA = () => {
+  const initialFormValues = {
+    envio: "",
+    fecha: "",
+    folios: "",
+    documento: "",
+    expediente: "",
+    remitido: "",
+    asunto: "",
+    viceacade: false,
+    viceinve: false,
+    secre: false,
+    diga: false,
+    posgrado: false,
+    ciencias: false,
+    ciencias2: "",
+    direccion: false,
+    direccion2: "",
+    oficina: false,
+    oficina2: "",
+    otro: false,
+    otro2: "",
+    accion: "",
+    conocimiento: "",
+    informar: "",
+    opinion: "",
+    corresponderle: "",
+    indicado: "",
+    respuesta: "",
+    resolucion: "",
+    presupuestal: "",
+    devolver: "",
+    verobs: "",
+    observaciones: "",
+    // Agrega aquí todos los inputs que necesites
+  };
+  const [formValues, setFormValues] = useState({
+    envio: "",
+    fecha: "",
+    folios: "",
+    documento: "",
+    expediente: "",
+    remitido: "",
+    asunto: "",
+    viceacade: "",
+    viceinve: "",
+    secre: "",
+    diga: "",
+    posgrado: "",
+    ciencias: "",
+    ciencias2: "",
+    direccion: "",
+    direccion2: "",
+    oficina: "",
+    oficina2: "",
+    otro: "",
+    otro2: "",
+    accion: "",
+    conocimiento: "",
+    informar: "",
+    opinion: "",
+    corresponderle: "",
+    indicado: "",
+    respuesta: "",
+    resolucion: "",
+    presupuestal: "",
+    devolver: "",
+    verobs: "",
+    observaciones: "",
+    // Agrega aquí todos los inputs que necesites
+  });
+
+  const [outputUrl, setOutputUrl] = useState("");
+
+  const handleInputChange = (event) => {
+    const { name, value, type, checked } = event.target;
+    const inputValue = type === "checkbox" ? checked : value;
+    setFormValues((prevFormValues) => ({
+      ...prevFormValues,
+      [name]: inputValue,
+    }));
+  };
+
+  const generatePDF = () => {
+    const doc = new jsPDF();
+
+    // Crear instancia de jsPDF
+
+    doc.addFont("times", "normal", "WinAnsiEncoding");
+    // Definir el estilo de fuente
+    doc.setFont("times", "bold");
+
+    // Añadir titulo parte arriba
+    doc.setFontSize(15);
+    doc.text(
+      `UNIVERSIDAD NACIONAL DE EDUCACIÓN`,
+      doc.internal.pageSize.getWidth() / 2,
+      20,
+      { align: "center" }
+    );
+
+    doc.setFontSize(14);
+    doc.text(
+      "Enrique Guzmán y Valle",
+      doc.internal.pageSize.getWidth() / 2,
+      25,
+      { align: "center" }
+    );
+
+    doc.setFontSize(14);
+    doc.setFont("times", "bolditalic");
+    doc.text(
+      `"Alma Máter del Magisterio Nacional"`,
+      doc.internal.pageSize.getWidth() / 2,
+      30,
+      { align: "center" }
+    );
+
+    doc.setFontSize(14);
+    doc.setFont("times", "bold");
+    doc.text("RECTORADO", doc.internal.pageSize.getWidth() / 2, 35, {
+      align: "center",
     });
+    //Añadir imagen
+    let imgData =
+      "https://upload.wikimedia.org/wikipedia/commons/0/08/Escudo_UNE.png";
+    doc.addImage(imgData, "PNG", 102, 36, 8, 12, { align: "center" });
+    //Añadir linea
+    doc.setLineWidth(0.5);
+    doc.line(20, 50, 190, 50);
 
-    const [outputUrl, setOutputUrl] = useState("");
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `Hoja de Envío N°: ${formValues.envio}-2023-R-UNE`,
+      doc.internal.pageSize.getWidth() / 2,
+      58,
+      { align: "center" }
+    );
 
-    const handleInputChange = (event) => {
-      const { name, value, type, checked } = event.target;
-      const inputValue = type === 'checkbox' ? checked : value;
-      setFormValues((prevFormValues) => ({
-        ...prevFormValues,
-        [name]: inputValue,
-      }));
-    };
-  
-    const generatePDF = () => {
-      const doc = new jsPDF();
-  
-      // Crear instancia de jsPDF
-  
-      doc.addFont("times", "normal", "WinAnsiEncoding");
-      // Definir el estilo de fuente
-      doc.setFont("times", "bold");
-  
-      // Añadir titulo parte arriba
-      doc.setFontSize(15);
-      doc.text(
-        `UNIVERSIDAD NACIONAL DE EDUCACIÓN`,
-        doc.internal.pageSize.getWidth() / 2,
-        20,
-        { align: "center" }
-      );
-  
-      doc.setFontSize(14);
-      doc.text(
-        "Enrique Guzmán y Valle",
-        doc.internal.pageSize.getWidth() / 2,
-        25,
-        { align: "center" }
-      );
-  
-      doc.setFontSize(14);
-      doc.setFont("times", "bolditalic");
-      doc.text(
-        `"Alma Máter del Magisterio Nacional"`,
-        doc.internal.pageSize.getWidth() / 2,
-        30,
-        { align: "center" }
-      );
-  
-      doc.setFontSize(14);
-      doc.setFont("times", "bold");
-      doc.text("RECTORADO", doc.internal.pageSize.getWidth() / 2, 35, {
-        align: "center",
-      });
-      //Añadir imagen
-      let imgData =
-        "https://upload.wikimedia.org/wikipedia/commons/0/08/Escudo_UNE.png";
-      doc.addImage(imgData, "PNG", 102, 36, 8, 12, { align: "center" });
-      //Añadir linea
-      doc.setLineWidth(0.5);
-      doc.line(20, 50, 190, 50);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(
-        `Hoja de Envío N°: ${formValues.envio}-2023-R-UNE`,
-        doc.internal.pageSize.getWidth() / 2,
-        58,
-        { align: "center" }
-      );
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`FECHA: ${formValues.fecha}`, 20, 70);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`N° DE FOLIOS: ${formValues.folios}`, 130, 70);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(
-        `DOCUMENTO: ${formValues.documento}`,
-        20,
-        80
-      );
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text("MPV-EPP-740-23.", 20, 85);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`REMITIDO POR: ${formValues.remitido}`, 20, 95);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(
-        `ASUNTO: ${formValues.asunto}`,
-        20,
-        105
-      );
-  
-      //PASE A:
-      doc.setFontSize(12);
-      doc.setFont("times", "bold");
-      doc.text("PASE A:", 20, 115);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.viceacade ? '(X)' : '(   )'}  Vicerrectorado Académico`, 20, 130);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.viceinve ? '(X)' : '(   )'}  Vicerrectorado de Investigación`, 20, 135);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.secre ? '(X)' : '(   )'}  Secretaría General`, 20, 140);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.diga ? '(X)' : '(   )'}  DIGA`, 20, 145);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.posgrado ? '(X)' : '(   )'}  Escuela de Posgrado`, 20, 150);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.ciencias ? '(X)' : '(   )'}  Facultad de Ciencias Sociales y`, 20, 155);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text("Humanidades", 28, 160);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.direccion ? '(X)' : '(   )'}  Dirección    ${formValues.direccion2} `, 20, 165);
-  
-      doc.setLineWidth(0.3);
-      doc.line(47, 166, 100, 166);  
-      
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.oficina ? '(X)' : '(   )'}  Oficina   ${formValues.oficina2} `, 20, 170);
-  
-      doc.setLineWidth(0.3);
-      doc.line(42, 171, 100, 171);    
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.otro ? '(X)' : '(   )'}  Otro   ${formValues.otro2} `, 20, 175);
-  
-      doc.setLineWidth(0.3);
-      doc.line(37, 176, 100, 176);  
-  
-      //PARA:
-      doc.setFontSize(12);
-      doc.setFont("times", "bold");
-      doc.text("PARA:", 110, 115);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.accion ? '(X)' : '(   )'}  Acción Necesaria`, 110, 130);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.conocimiento ? '(X)' : '(   )'}  Conocimiento`, 110, 135);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.informar ? '(X)' : '(   )'}  Informar`, 110, 140);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.opinion ? '(X)' : '(   )'}  Opinión Legal`, 110, 145);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.corresponderle ? '(X)' : '(   )'}  Por corresponderle`, 110, 150);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.indicado ? '(X)' : '(   )'}  Según lo indicado`, 110, 155);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.respuesta ? '(X)' : '(   )'}  Proyectar Respuesta`, 110, 160);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.resolucion ? '(X)' : '(   )'}  Proyectar Resolución`, 110, 165);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.presupuestal ? '(X)' : '(   )'}  Previsión Presupuestal`, 110, 170);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.devolver ? '(X)' : '(   )'}  Devolver`, 110, 175);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.verobs ? '(X)' : '(   )'}  VER OBSERVACIONES`, 110, 180);
-  
-      //OBSERVACIONES
-      doc.setFontSize(12);
-      doc.setFont("times", "bold");
-      doc.text("OBSERVACIONES:", 15, 195);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.observaciones}`, 15, 200);
-  
-      doc.setLineWidth(0.3);
-      doc.line(15, 201, 100, 201);
-  
-      // Guardar el PDF
-      // doc.save("ModeloA.pdf");
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`FECHA: ${formValues.fecha}`, 20, 70);
 
-      // Actualizar el estado con la URL del PDF
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`N° DE FOLIOS: ${formValues.folios}`, 130, 70);
+
+    // Ancho máximo para el campo "Documento"
+    const maxDocWidth = 140;
+
+    // Dividir el contenido del campo "Documento" en líneas
+    const docLines = doc.splitTextToSize(formValues.documento, maxDocWidth);
+
+    // Calcular la altura necesaria para dibujar el campo "Documento"
+    const docHeight = docLines.length * 5; // Multiplicar por 5 para el espacio entre líneas
+
+    // Añadir el campo "Documento" en el PDF
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`DOCUMENTO:`, 20, 80);
+
+    // Definir la posición inicial para el campo "Documento"
+    let docY = 80;
+    let docZ = 76;
+
+    // Dibujar cada línea del campo "Documento"
+    for (let line of docLines) {
+      doc.text(line, 50, docY);
+      doc.setLineWidth(0.2);
+      docY += 5;
+      // Aumentar la posición para la siguiente línea
+      docZ += 5;
+      doc.line(50, docZ, 192, docZ);
+    }
+
+    // Verificar si el campo "Documento" ocupó más de una línea
+    if (docHeight > 5) {
+      // El campo "Documento" ocupó más de una línea, colocar "expediente" debajo
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.expediente}`, 20, docY + 0); // Colocar el campo "expediente" debajo del campo "Documento"
+    } else {
+      // El campo "Documento" ocupó solo una línea, colocar "expediente" en su posición original
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.expediente}`, 20, 85); // Posición original para "expediente"
+    }
+
+    // Dividir el contenido del campo "Documento" en líneas
+    const docLines2 = doc.splitTextToSize(formValues.remitido, maxDocWidth);
+
+    // Añadir el campo "Documento" en el PDF
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`REMITIDO POR: `, 20, 98);
+    // Definir la posición inicial para el campo "Documento"
+    let docY2 = 98;
+    let docZ2 = 94;
+
+    // Dibujar cada línea del campo "Documento"
+    for (let line of docLines2) {
+      doc.text(line, 53, docY2);
+      doc.setLineWidth(0.2);
+      docY2 += 5; // Aumentar la posición para la siguiente línea
+      docZ2 += 5;
+      doc.line(53, docZ2, 192, docZ2);
+    }
+
+    const docLines3 = doc.splitTextToSize(formValues.asunto, maxDocWidth);
+
+    // Añadir el campo "Documento" en el PDF
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`ASUNTO: `, 20, 112);
+    // Definir la posición inicial para el campo "Documento"
+    let docY3 = 112;
+    let docZ3 = 108;
+
+    // Dibujar cada línea del campo "Documento"
+    for (let line of docLines3) {
+      doc.text(line, 40, docY3);
+      doc.setLineWidth(0.2);
+      docY3 += 5; // Aumentar la posición para la siguiente línea
+      docZ3 += 5;
+      doc.line(40, docZ3, 192, docZ3);
+    }
+
+    //PASE A:
+    doc.setFontSize(12);
+    doc.setFont("times", "bold");
+    doc.text("PASE A:", 20, 125);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.viceacade ? "(X)" : "(   )"}  Vicerrectorado Académico`,
+      20,
+      135
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${
+        formValues.viceinve ? "(X)" : "(   )"
+      }  Vicerrectorado de Investigación`,
+      20,
+      140
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.secre ? "(X)" : "(   )"}  Secretaría General`,
+      20,
+      145
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`${formValues.diga ? "(X)" : "(   )"}  DIGA`, 20, 150);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.posgrado ? "(X)" : "(   )"}  Escuela de Posgrado`,
+      20,
+      155
+    );
+
+    const maxDocWidth2 = 57;
+    // Dividir el contenido del campo "Documento" en líneas
+    const docLines4 = doc.splitTextToSize(formValues.ciencias2, maxDocWidth2);
+
+    // Añadir el campo "Documento" en el PDF
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`${formValues.ciencias ? "(X)" : "(   )"}  Facultad `, 20, 160);
+    // Definir la posición inicial para el campo "Documento"
+    let docY4 = 160;
+    let docZ4 = 156;
+
+    // Dibujar cada línea del campo "Documento"
+for (let i = 0; i < docLines4.length; i++) {
+  const line = docLines4[i];
+  if (i === 0) {
+    doc.text(line, 44, docY4);
+    docZ4 += 5;
+  doc.line(44, docZ4, 100, docZ4);
+  } else {
+    doc.text(line, 28, docY4);
+    docZ4 += 5;
+  doc.line(28, docZ4, 100, docZ4);
+  }
+  doc.setLineWidth(0.2);
+  docY4 += 5; // Aumentar la posición para la siguiente línea
+  
+}
+    // doc.setFontSize(12);
+    // doc.setFont("times", "normal");
+    // doc.text(
+    //   `${formValues.ciencias ? "(X)" : "(   )"}  Facultad  ${formValues.ciencias2} `,20,
+    //   160
+    // );
+
+    // doc.setLineWidth(0.3);
+    // doc.line(44, 161, 100, 161);
+
+
+    // doc.setFontSize(12);
+    // doc.setFont("times", "normal");
+    // doc.text("Humanidades", 28, 165);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.direccion ? "(X)" : "(   )"}  Dirección  ${
+        formValues.direccion2
+      } `,
+      20,
+      170
+    );
+
+    
+    
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.oficina ? "(X)" : "(   )"}  Oficina  ${
+        formValues.oficina2
+      } `,
+      20,
+      180
+    );
+
+    doc.setLineWidth(0.3);
+    doc.line(42, 171, 100, 171);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.otro ? "(X)" : "(   )"}  Otro  ${formValues.otro2} `,
+      20,
+      190
+    );
+
+    doc.setLineWidth(0.3);
+    doc.line(37, 176, 100, 176);
+
+    //PARA:
+    doc.setFontSize(12);
+    doc.setFont("times", "bold");
+    doc.text("PARA:", 110, 123);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.accion ? "(X)" : "(   )"}  Acción Necesaria`,
+      110,
+      130
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.conocimiento ? "(X)" : "(   )"}  Conocimiento`,
+      110,
+      135
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`${formValues.informar ? "(X)" : "(   )"}  Informar`, 110, 140);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.opinion ? "(X)" : "(   )"}  Opinión Legal`,
+      110,
+      145
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.corresponderle ? "(X)" : "(   )"}  Por corresponderle`,
+      110,
+      150
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.indicado ? "(X)" : "(   )"}  Según lo indicado`,
+      110,
+      155
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.respuesta ? "(X)" : "(   )"}  Proyectar Respuesta`,
+      110,
+      160
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.resolucion ? "(X)" : "(   )"}  Proyectar Resolución`,
+      110,
+      165
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.presupuestal ? "(X)" : "(   )"}  Previsión Presupuestal`,
+      110,
+      170
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`${formValues.devolver ? "(X)" : "(   )"}  Devolver`, 110, 175);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.verobs ? "(X)" : "(   )"}  VER OBSERVACIONES`,
+      110,
+      180
+    );
+
+    //OBSERVACIONES
+    doc.setFontSize(12);
+    doc.setFont("times", "bold");
+    doc.text("OBSERVACIONES:", 15, 200);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`${formValues.observaciones}`, 15, 205);
+
+    doc.setLineWidth(0.3);
+    doc.line(15, 206, 100, 206);
+
+    // Guardar el PDF
+    // doc.save("ModeloA.pdf");
+
+    // Actualizar el estado con la URL del PDF
     const pdfUrl = doc.output("bloburl");
     setOutputUrl(pdfUrl);
-    };
+  };
 
-    const handleGeneratePDF = () => {
-      const doc = new jsPDF();
-  
-      // Crear instancia de jsPDF
-  
-      doc.addFont("times", "normal", "WinAnsiEncoding");
-      // Definir el estilo de fuente
-      doc.setFont("times", "bold");
-  
-      // Añadir titulo parte arriba
-      doc.setFontSize(15);
-      doc.text(
-        `UNIVERSIDAD NACIONAL DE EDUCACIÓN`,
-        doc.internal.pageSize.getWidth() / 2,
-        20,
-        { align: "center" }
-      );
-  
-      doc.setFontSize(14);
-      doc.text(
-        "Enrique Guzmán y Valle",
-        doc.internal.pageSize.getWidth() / 2,
-        25,
-        { align: "center" }
-      );
-  
-      doc.setFontSize(14);
-      doc.setFont("times", "bolditalic");
-      doc.text(
-        `"Alma Máter del Magisterio Nacional"`,
-        doc.internal.pageSize.getWidth() / 2,
-        30,
-        { align: "center" }
-      );
-  
-      doc.setFontSize(14);
-      doc.setFont("times", "bold");
-      doc.text("RECTORADO", doc.internal.pageSize.getWidth() / 2, 35, {
-        align: "center",
-      });
-      //Añadir imagen
-      let imgData =
-        "https://upload.wikimedia.org/wikipedia/commons/0/08/Escudo_UNE.png";
-      doc.addImage(imgData, "PNG", 102, 36, 8, 12, { align: "center" });
-      //Añadir linea
-      doc.setLineWidth(0.5);
-      doc.line(20, 50, 190, 50);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(
-        `Hoja de Envío N°: ${formValues.envio}-2023-R-UNE`,
-        doc.internal.pageSize.getWidth() / 2,
-        58,
-        { align: "center" }
-      );
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`FECHA: ${formValues.fecha}`, 20, 70);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`N° DE FOLIOS: ${formValues.folios}`, 130, 70);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(
-        `DOCUMENTO: ${formValues.documento}`,
-        20,
-        80
-      );
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text("MPV-EPP-740-23.", 20, 85);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`REMITIDO POR: ${formValues.remitido}`, 20, 95);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(
-        `ASUNTO: ${formValues.asunto}`,
-        20,
-        105
-      );
-  
-      //PASE A:
-      doc.setFontSize(12);
-      doc.setFont("times", "bold");
-      doc.text("PASE A:", 20, 115);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.viceacade ? '(X)' : '(   )'}  Vicerrectorado Académico`, 20, 130);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.viceinve ? '(X)' : '(   )'}  Vicerrectorado de Investigación`, 20, 135);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.secre ? '(X)' : '(   )'}  Secretaría General`, 20, 140);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.diga ? '(X)' : '(   )'}  DIGA`, 20, 145);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.posgrado ? '(X)' : '(   )'}  Escuela de Posgrado`, 20, 150);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.ciencias ? '(X)' : '(   )'}  Facultad de Ciencias Sociales y`, 20, 155);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text("Humanidades", 28, 160);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.direccion ? '(X)' : '(   )'}  Dirección    ${formValues.direccion2} `, 20, 165);
-  
-      doc.setLineWidth(0.3);
-      doc.line(47, 166, 100, 166);  
-      
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.oficina ? '(X)' : '(   )'}  Oficina   ${formValues.oficina2} `, 20, 170);
-  
-      doc.setLineWidth(0.3);
-      doc.line(42, 171, 100, 171);    
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.otro ? '(X)' : '(   )'}  Otro   ${formValues.otro2} `, 20, 175);
-  
-      doc.setLineWidth(0.3);
-      doc.line(37, 176, 100, 176);  
-  
-      //PARA:
-      doc.setFontSize(12);
-      doc.setFont("times", "bold");
-      doc.text("PARA:", 110, 115);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.accion ? '(X)' : '(   )'}  Acción Necesaria`, 110, 130);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.conocimiento ? '(X)' : '(   )'}  Conocimiento`, 110, 135);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.informar ? '(X)' : '(   )'}  Informar`, 110, 140);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.opinion ? '(X)' : '(   )'}  Opinión Legal`, 110, 145);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.corresponderle ? '(X)' : '(   )'}  Por corresponderle`, 110, 150);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.indicado ? '(X)' : '(   )'}  Según lo indicado`, 110, 155);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.respuesta ? '(X)' : '(   )'}  Proyectar Respuesta`, 110, 160);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.resolucion ? '(X)' : '(   )'}  Proyectar Resolución`, 110, 165);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.presupuestal ? '(X)' : '(   )'}  Previsión Presupuestal`, 110, 170);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.devolver ? '(X)' : '(   )'}  Devolver`, 110, 175);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.verobs ? '(X)' : '(   )'}  VER OBSERVACIONES`, 110, 180);
-  
-      //OBSERVACIONES
-      doc.setFontSize(12);
-      doc.setFont("times", "bold");
-      doc.text("OBSERVACIONES:", 15, 195);
-  
-      doc.setFontSize(12);
-      doc.setFont("times", "normal");
-      doc.text(`${formValues.observaciones}`, 15, 200);
-  
-      doc.setLineWidth(0.3);
-      doc.line(15, 201, 100, 201);
-  
-      // Guardar el PDF
-      doc.save("ModeloA.pdf");
-      // Resetear los valores del formulario
+  const handleGeneratePDF = () => {
+    const doc = new jsPDF();
+
+    // Crear instancia de jsPDF
+
+    doc.addFont("times", "normal", "WinAnsiEncoding");
+    // Definir el estilo de fuente
+    doc.setFont("times", "bold");
+
+    // Añadir titulo parte arriba
+    doc.setFontSize(15);
+    doc.text(
+      `UNIVERSIDAD NACIONAL DE EDUCACIÓN`,
+      doc.internal.pageSize.getWidth() / 2,
+      20,
+      { align: "center" }
+    );
+
+    doc.setFontSize(14);
+    doc.text(
+      "Enrique Guzmán y Valle",
+      doc.internal.pageSize.getWidth() / 2,
+      25,
+      { align: "center" }
+    );
+
+    doc.setFontSize(14);
+    doc.setFont("times", "bolditalic");
+    doc.text(
+      `"Alma Máter del Magisterio Nacional"`,
+      doc.internal.pageSize.getWidth() / 2,
+      30,
+      { align: "center" }
+    );
+
+    doc.setFontSize(14);
+    doc.setFont("times", "bold");
+    doc.text("RECTORADO", doc.internal.pageSize.getWidth() / 2, 35, {
+      align: "center",
+    });
+    //Añadir imagen
+    let imgData =
+      "https://upload.wikimedia.org/wikipedia/commons/0/08/Escudo_UNE.png";
+    doc.addImage(imgData, "PNG", 102, 36, 8, 12, { align: "center" });
+    //Añadir linea
+    doc.setLineWidth(0.5);
+    doc.line(20, 50, 190, 50);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `Hoja de Envío N°: ${formValues.envio}-2023-R-UNE`,
+      doc.internal.pageSize.getWidth() / 2,
+      58,
+      { align: "center" }
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`FECHA: ${formValues.fecha}`, 20, 70);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`N° DE FOLIOS: ${formValues.folios}`, 130, 70);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`DOCUMENTO: ${formValues.documento}`, 20, 80);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text("MPV-EPP-740-23.", 20, 85);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`REMITIDO POR: ${formValues.remitido}`, 20, 95);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`ASUNTO: ${formValues.asunto}`, 20, 105);
+
+    //PASE A:
+    doc.setFontSize(12);
+    doc.setFont("times", "bold");
+    doc.text("PASE A:", 20, 115);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.viceacade ? "(X)" : "(   )"}  Vicerrectorado Académico`,
+      20,
+      130
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${
+        formValues.viceinve ? "(X)" : "(   )"
+      }  Vicerrectorado de Investigación`,
+      20,
+      135
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.secre ? "(X)" : "(   )"}  Secretaría General`,
+      20,
+      140
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`${formValues.diga ? "(X)" : "(   )"}  DIGA`, 20, 145);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.posgrado ? "(X)" : "(   )"}  Escuela de Posgrado`,
+      20,
+      150
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${
+        formValues.ciencias ? "(X)" : "(   )"
+      }  Facultad de Ciencias Sociales y`,
+      20,
+      155
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text("Humanidades", 28, 160);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.direccion ? "(X)" : "(   )"}  Dirección    ${
+        formValues.direccion2
+      } `,
+      20,
+      165
+    );
+
+    doc.setLineWidth(0.3);
+    doc.line(47, 166, 100, 166);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.oficina ? "(X)" : "(   )"}  Oficina   ${
+        formValues.oficina2
+      } `,
+      20,
+      170
+    );
+
+    doc.setLineWidth(0.3);
+    doc.line(42, 171, 100, 171);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.otro ? "(X)" : "(   )"}  Otro   ${formValues.otro2} `,
+      20,
+      175
+    );
+
+    doc.setLineWidth(0.3);
+    doc.line(37, 176, 100, 176);
+
+    //PARA:
+    doc.setFontSize(12);
+    doc.setFont("times", "bold");
+    doc.text("PARA:", 110, 115);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.accion ? "(X)" : "(   )"}  Acción Necesaria`,
+      110,
+      130
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.conocimiento ? "(X)" : "(   )"}  Conocimiento`,
+      110,
+      135
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`${formValues.informar ? "(X)" : "(   )"}  Informar`, 110, 140);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.opinion ? "(X)" : "(   )"}  Opinión Legal`,
+      110,
+      145
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.corresponderle ? "(X)" : "(   )"}  Por corresponderle`,
+      110,
+      150
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.indicado ? "(X)" : "(   )"}  Según lo indicado`,
+      110,
+      155
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.respuesta ? "(X)" : "(   )"}  Proyectar Respuesta`,
+      110,
+      160
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.resolucion ? "(X)" : "(   )"}  Proyectar Resolución`,
+      110,
+      165
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.presupuestal ? "(X)" : "(   )"}  Previsión Presupuestal`,
+      110,
+      170
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`${formValues.devolver ? "(X)" : "(   )"}  Devolver`, 110, 175);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(
+      `${formValues.verobs ? "(X)" : "(   )"}  VER OBSERVACIONES`,
+      110,
+      180
+    );
+
+    //OBSERVACIONES
+    doc.setFontSize(12);
+    doc.setFont("times", "bold");
+    doc.text("OBSERVACIONES:", 15, 195);
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`${formValues.observaciones}`, 15, 200);
+
+    doc.setLineWidth(0.3);
+    doc.line(15, 201, 100, 201);
+
+    // Guardar el PDF
+    doc.save("ModeloA.pdf");
+    // Resetear los valores del formulario
     resetFormValues();
-    };
+  };
 
-    const resetFormValues = () => {
-      console.log("Resetting form values");
-      setFormValues(initialFormValues);
-    };
+  const resetFormValues = () => {
+    console.log("Resetting form values");
+    setFormValues(initialFormValues);
+  };
 
-    useEffect(() => {
-      generatePDF();
-    }, [formValues]); // Ejecutar generatePDF cada vez que formValues cambie
-  
+  useEffect(() => {
+    generatePDF();
+  }, [formValues]); // Ejecutar generatePDF cada vez que formValues cambie
 
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      // Aquí puedes realizar acciones con los valores del formulario
-      
-    };
-
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Aquí puedes realizar acciones con los valores del formulario
+  };
 
   return (
     <div className="grid gap-6 mb-6 md:grid-cols-2">
@@ -539,7 +768,7 @@ import VisualizadorPDF from "./VisualizadorPDF";
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Hoja Envio"
                 value={formValues.envio}
-          onChange={handleInputChange}
+                onChange={handleInputChange}
                 required
               />
             </div>
@@ -557,7 +786,7 @@ import VisualizadorPDF from "./VisualizadorPDF";
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Fecha"
                 value={formValues.fecha}
-          onChange={handleInputChange}
+                onChange={handleInputChange}
                 required
               />
             </div>
@@ -575,7 +804,7 @@ import VisualizadorPDF from "./VisualizadorPDF";
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="N° Folios"
                 value={formValues.folios}
-          onChange={handleInputChange}
+                onChange={handleInputChange}
                 required
               />
             </div>
@@ -592,10 +821,27 @@ import VisualizadorPDF from "./VisualizadorPDF";
               id="documento"
               name="documento"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Tipo de Documento"              
-          value={formValues.documento}
-          onChange={handleInputChange}
+              placeholder="Tipo de Documento"
+              value={formValues.documento}
+              onChange={handleInputChange}
               required
+            />
+          </div>
+          <div className="mb-6">
+            <label
+              for="expediente"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Expediente
+            </label>
+            <input
+              type="text"
+              id="expediente"
+              name="expediente"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Tipo de Documento"
+              value={formValues.expediente}
+              onChange={handleInputChange}
             />
           </div>
           <div className="mb-6">
@@ -612,7 +858,7 @@ import VisualizadorPDF from "./VisualizadorPDF";
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Nombre del Área"
               value={formValues.remitido}
-          onChange={handleInputChange}
+              onChange={handleInputChange}
               required
             />
           </div>
@@ -630,7 +876,7 @@ import VisualizadorPDF from "./VisualizadorPDF";
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="asunto"
               value={formValues.asunto}
-          onChange={handleInputChange}
+              onChange={handleInputChange}
               required
             />
           </div>
@@ -744,8 +990,18 @@ import VisualizadorPDF from "./VisualizadorPDF";
                       for="laravel-checkbox"
                       className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                     >
-                      Facultad de Ciencias Sociales y Humanidades
+                      Facultad                      
                     </label>
+                    <input
+                      type="text"
+                      id="ciencias2"
+                      name="ciencias2"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Nombre Facultad"
+                      value={formValues.ciencias2}
+                      onChange={handleInputChange}
+                      required
+                    />
                   </div>
                 </li>
                 <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
@@ -765,15 +1021,15 @@ import VisualizadorPDF from "./VisualizadorPDF";
                       Dirección
                     </label>
                     <input
-              type="text"
-              id="dirección2"
-              name="direccion2"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Nombre Dirección"
-              value={formValues.direccion2}
+                      type="text"
+                      id="dirección2"
+                      name="direccion2"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Nombre Dirección"
+                      value={formValues.direccion2}
                       onChange={handleInputChange}
-              required
-            />
+                      required
+                    />
                   </div>
                 </li>
                 <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
@@ -793,15 +1049,15 @@ import VisualizadorPDF from "./VisualizadorPDF";
                       Oficina
                     </label>
                     <input
-              type="text"
-              id="oficina2"
-              name="oficina2"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Nombre de Oficina"
-              value={formValues.oficina2}
+                      type="text"
+                      id="oficina2"
+                      name="oficina2"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Nombre de Oficina"
+                      value={formValues.oficina2}
                       onChange={handleInputChange}
-              required
-            />
+                      required
+                    />
                   </div>
                 </li>
                 <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
@@ -821,19 +1077,18 @@ import VisualizadorPDF from "./VisualizadorPDF";
                       Otro
                     </label>
                     <input
-              type="text"
-              id="otro2"
-              name="otro2"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Otro"
-              value={formValues.otro2}
+                      type="text"
+                      id="otro2"
+                      name="otro2"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Otro"
+                      value={formValues.otro2}
                       onChange={handleInputChange}
-              required
-            />
+                      required
+                    />
                   </div>
                 </li>
               </ul>
-
             </div>
             <div>
               <h3 className="mb-4 font-semibold text-gray-900 dark:text-white">
@@ -1053,14 +1308,20 @@ import VisualizadorPDF from "./VisualizadorPDF";
               id="observaciones"
               name="observaciones"
               value={formValues.observaciones}
-                      onChange={handleInputChange}
+              onChange={handleInputChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Colocar alguna Observación"
               required
             />
           </div>
-        </form>       
-        <button type="submit" onClick={handleGeneratePDF} className="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Generar PDF A</button>
+        </form>
+        <button
+          type="submit"
+          onClick={handleGeneratePDF}
+          className="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+        >
+          Generar PDF A
+        </button>
       </div>
       <VisualizadorPDF url={outputUrl} />
     </div>
