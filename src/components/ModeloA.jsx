@@ -273,6 +273,8 @@ const ModeloA = () => {
       155
     );
 
+
+    //Esta parte es la del Facultad y agregar
     const maxDocWidth2 = 57;
     // Dividir el contenido del campo "Documento" en líneas
     const docLines4 = doc.splitTextToSize(formValues.ciencias2, maxDocWidth2);
@@ -298,36 +300,25 @@ for (let i = 0; i < docLines4.length; i++) {
   doc.line(28, docZ4, 100, docZ4);
   }
   doc.setLineWidth(0.2);
-  docY4 += 5; // Aumentar la posición para la siguiente línea
-  
+  docY4 += 5; // Aumentar la posición para la siguiente línea  
 }
+    
+
     // doc.setFontSize(12);
     // doc.setFont("times", "normal");
     // doc.text(
-    //   `${formValues.ciencias ? "(X)" : "(   )"}  Facultad  ${formValues.ciencias2} `,20,
-    //   160
+    //   `${formValues.direccion ? "(X)" : "(   )"}  Dirección  ${
+    //     formValues.direccion2
+    //   } `,
+    //   20,
+    //   170
     // );
-
+    
     // doc.setLineWidth(0.3);
-    // doc.line(44, 161, 100, 161);
-
-
-    // doc.setFontSize(12);
-    // doc.setFont("times", "normal");
-    // doc.text("Humanidades", 28, 165);
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(
-      `${formValues.direccion ? "(X)" : "(   )"}  Dirección  ${
-        formValues.direccion2
-      } `,
-      20,
-      170
-    );
-
+    // doc.line(42, 171, 100, 171);
     
     
+
     doc.setFontSize(12);
     doc.setFont("times", "normal");
     doc.text(
@@ -338,9 +329,6 @@ for (let i = 0; i < docLines4.length; i++) {
       180
     );
 
-    doc.setLineWidth(0.3);
-    doc.line(42, 171, 100, 171);
-
     doc.setFontSize(12);
     doc.setFont("times", "normal");
     doc.text(
@@ -349,8 +337,8 @@ for (let i = 0; i < docLines4.length; i++) {
       190
     );
 
-    doc.setLineWidth(0.3);
-    doc.line(37, 176, 100, 176);
+    // doc.setLineWidth(0.3);
+    // doc.line(37, 176, 100, 176);
 
     //PARA:
     doc.setFontSize(12);
