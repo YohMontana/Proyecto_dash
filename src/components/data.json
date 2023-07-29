@@ -1,0 +1,36 @@
+{
+  "centrosDeCosto": {
+    "DIGA": {
+      "correo": "rcallupe@une.edu.pe",
+      "mensaje": "Mtra.<br>Rocio de Milagro Callupe Chavez<br>Direccion General De Administracion (e) de la UNE<br>Presente.-<br><br>Por encargo de la Dra. Lida Violeta Asencios Trujillo (Rectora de la UNE) remito:"
+    },
+    "escuela_de_posgrado": {
+      "correo": "mtello@une.edu.pe",
+      "mensaje": "Mtra.<br>Mario Tello Vega<br>Escuela De Posgrado (e) de la UNE<br>Presente.-<br><br>Por encargo de la Dra. Lida Violeta Asencios Trujillo (Rectora de la UNE) remito:"      
+    },
+    "facultad_ciencias_sociales": {
+      "correo": "folano@une.edu.pe",
+      "mensaje": "Mtra.<br>Francisco Jose Olano Martinez<br>Facultad De Ciencias Sociales Y Humanidades (e) de la UNE<br>Presente.-<br><br>Por encargo de la Dra. Lida Violeta Asencios Trujillo (Rectora de la UNE) remito:"      
+    },
+    "secretaria_general": {
+      "correo": "achacon@une.edu.pe",
+      "mensaje": "Mtra.<br>Anita Luz Chacón Ayala<br>Secretaria General (e) de la UNE<br>Presente.-<br><br>Por encargo de la Dra. Lida Violeta Asencios Trujillo (Rectora de la UNE) remito:"      
+    },
+    "vicerrectorado_academico": {
+      "correo": "rticlayauri@une.edu.pe",
+      "mensaje": "Mtra.<br>Rosa Bertha Ticlayauri Maldonado<br>Vicerrectorado Academico (e) de la UNE<br>Presente.-<br><br>Por encargo de la Dra. Lida Violeta Asencios Trujillo (Rectora de la UNE) remito:"      
+    },
+    "vicerrectorado_de_investigacion": {
+      "correo": "dchirinos@une.edu.pe",
+      "mensaje": "Mtra.<br>Daniel Marcos Chirinos Maldonado<br>Vicerrectorado De Investigacion (e) de la UNE<br>Presente.-<br><br>Por encargo de la Dra. Lida Violeta Asencios Trujillo (Rectora de la UNE) remito:"      
+    },
+    "prueba": {
+      "correo": "estebanjcarlo@gmail.com",
+      "mensaje": "Mtra.<br>Jhancarlo Esteban Coro<br>Ingeniero de Sistemas de la UNE<br>Presente.-<br><br>Por encargo de la Dra. Lida Violeta Asencios Trujillo (Rectora de la UNE) remito:"      
+    },
+    "otro": {
+        "correo": "", 
+        "mensaje": "" 
+      }
+  }
+}

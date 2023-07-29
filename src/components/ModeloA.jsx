@@ -36,6 +36,8 @@ const ModeloA = () => {
     devolver: "",
     verobs: "",
     observaciones: "",
+    cc: "",
+    cc2: "",
     // Agrega aquí todos los inputs que necesites
   };
   const [formValues, setFormValues] = useState({
@@ -71,6 +73,8 @@ const ModeloA = () => {
     devolver: "",
     verobs: "",
     observaciones: "",
+    cc: "",
+    cc2: "",
     // Agrega aquí todos los inputs que necesites
   });
 
@@ -273,7 +277,6 @@ const ModeloA = () => {
       155
     );
 
-
     //Esta parte es la del Facultad y agregar
     const maxDocWidth2 = 57;
     // Dividir el contenido del campo "Documento" en líneas
@@ -288,69 +291,115 @@ const ModeloA = () => {
     let docZ4 = 156;
 
     // Dibujar cada línea del campo "Documento"
-for (let i = 0; i < docLines4.length; i++) {
-  const line = docLines4[i];
+    for (let i = 0; i < docLines4.length; i++) {
+      const line = docLines4[i];
+      if (i === 0) {
+        doc.text(line, 44, docY4);
+        docZ4 += 5;
+        doc.line(44, docZ4, 100, docZ4);
+      } else {
+        doc.text(line, 28, docY4);
+        docZ4 += 5;
+        doc.line(28, docZ4, 100, docZ4);
+      }
+      doc.setLineWidth(0.2);
+      docY4 += 5; // Aumentar la posición para la siguiente línea
+    }
+
+    // Dividir el contenido del campo "Documento" en líneas
+    const docLines5 = doc.splitTextToSize(formValues.direccion2, maxDocWidth2);
+
+    // Añadir el campo "Documento" en el PDF
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`${formValues.direccion ? "(X)" : "(   )"}  Dirección `, 20, 170);
+    // Definir la posición inicial para el campo "Documento"
+    let docY5 = 170;
+    let docZ5 = 166;
+
+    // Dibujar cada línea del campo "Documento"
+    for (let i = 0; i < docLines5.length; i++) {
+      const line = docLines5[i];
+      if (i === 0) {
+        doc.text(line, 46, docY5);
+        docZ5 += 5;
+        doc.line(46, docZ5, 100, docZ5);
+      } else {
+        doc.text(line, 28, docY5);
+        docZ5 += 5;
+        doc.line(28, docZ5, 100, docZ5);
+      }
+      doc.setLineWidth(0.2);
+      docY5 += 5; // Aumentar la posición para la siguiente línea
+    }
+
+
+   // Dividir el contenido del campo "Documento" en líneas
+   const docLines6 = doc.splitTextToSize(formValues.oficina2, maxDocWidth2);
+
+   // Añadir el campo "Documento" en el PDF
+   doc.setFontSize(12);
+   doc.setFont("times", "normal");
+   doc.text(`${formValues.oficina ? "(X)" : "(   )"}  Oficina `, 20, 180);
+   // Definir la posición inicial para el campo "Documento"
+   let docY6 = 180;
+   let docZ6 = 176;
+
+   // Dibujar cada línea del campo "Documento"
+   for (let i = 0; i < docLines6.length; i++) {
+     const line = docLines6[i];
+     if (i === 0) {
+       doc.text(line, 43, docY6);
+       docZ6 += 5;
+       doc.line(43, docZ6, 100, docZ6);
+     } else {
+       doc.text(line, 28, docY6);
+       docZ6 += 5;
+       doc.line(28, docZ6, 100, docZ6);
+     }
+     doc.setLineWidth(0.2);
+     docY6 += 5; // Aumentar la posición para la siguiente línea
+   } 
+
+
+// Dividir el contenido del campo "Documento" en líneas
+const docLines7 = doc.splitTextToSize(formValues.otro2, maxDocWidth2);
+
+// Añadir el campo "Documento" en el PDF
+doc.setFontSize(12);
+doc.setFont("times", "normal");
+doc.text(`${formValues.otro ? "(X)" : "(   )"}  Otro `, 20, 190);
+// Definir la posición inicial para el campo "Documento"
+let docY7 = 190;
+let docZ7 = 186;
+
+// Dibujar cada línea del campo "Documento"
+for (let i = 0; i < docLines7.length; i++) {
+  const line = docLines7[i];
   if (i === 0) {
-    doc.text(line, 44, docY4);
-    docZ4 += 5;
-  doc.line(44, docZ4, 100, docZ4);
+    doc.text(line, 38, docY7);
+    docZ7 += 5;
+    doc.line(38, docZ7, 100, docZ7);
   } else {
-    doc.text(line, 28, docY4);
-    docZ4 += 5;
-  doc.line(28, docZ4, 100, docZ4);
+    doc.text(line, 28, docY7);
+    docZ7 += 5;
+    doc.line(28, docZ7, 100, docZ7);
   }
   doc.setLineWidth(0.2);
-  docY4 += 5; // Aumentar la posición para la siguiente línea  
-}
-    
-
-    // doc.setFontSize(12);
-    // doc.setFont("times", "normal");
-    // doc.text(
-    //   `${formValues.direccion ? "(X)" : "(   )"}  Dirección  ${
-    //     formValues.direccion2
-    //   } `,
-    //   20,
-    //   170
-    // );
-    
-    // doc.setLineWidth(0.3);
-    // doc.line(42, 171, 100, 171);
-    
-    
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(
-      `${formValues.oficina ? "(X)" : "(   )"}  Oficina  ${
-        formValues.oficina2
-      } `,
-      20,
-      180
-    );
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(
-      `${formValues.otro ? "(X)" : "(   )"}  Otro  ${formValues.otro2} `,
-      20,
-      190
-    );
-
-    // doc.setLineWidth(0.3);
-    // doc.line(37, 176, 100, 176);
+  docY7 += 5; // Aumentar la posición para la siguiente línea
+} 
 
     //PARA:
     doc.setFontSize(12);
     doc.setFont("times", "bold");
-    doc.text("PARA:", 110, 123);
+    doc.text("PARA:", 110, 125);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
     doc.text(
       `${formValues.accion ? "(X)" : "(   )"}  Acción Necesaria`,
       110,
-      130
+      135
     );
 
     doc.setFontSize(12);
@@ -358,25 +407,17 @@ for (let i = 0; i < docLines4.length; i++) {
     doc.text(
       `${formValues.conocimiento ? "(X)" : "(   )"}  Conocimiento`,
       110,
-      135
+      140
     );
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text(`${formValues.informar ? "(X)" : "(   )"}  Informar`, 110, 140);
+    doc.text(`${formValues.informar ? "(X)" : "(   )"}  Informar`, 110, 145);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
     doc.text(
       `${formValues.opinion ? "(X)" : "(   )"}  Opinión Legal`,
-      110,
-      145
-    );
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(
-      `${formValues.corresponderle ? "(X)" : "(   )"}  Por corresponderle`,
       110,
       150
     );
@@ -384,7 +425,7 @@ for (let i = 0; i < docLines4.length; i++) {
     doc.setFontSize(12);
     doc.setFont("times", "normal");
     doc.text(
-      `${formValues.indicado ? "(X)" : "(   )"}  Según lo indicado`,
+      `${formValues.corresponderle ? "(X)" : "(   )"}  Por corresponderle`,
       110,
       155
     );
@@ -392,7 +433,7 @@ for (let i = 0; i < docLines4.length; i++) {
     doc.setFontSize(12);
     doc.setFont("times", "normal");
     doc.text(
-      `${formValues.respuesta ? "(X)" : "(   )"}  Proyectar Respuesta`,
+      `${formValues.indicado ? "(X)" : "(   )"}  Según lo indicado`,
       110,
       160
     );
@@ -400,7 +441,7 @@ for (let i = 0; i < docLines4.length; i++) {
     doc.setFontSize(12);
     doc.setFont("times", "normal");
     doc.text(
-      `${formValues.resolucion ? "(X)" : "(   )"}  Proyectar Resolución`,
+      `${formValues.respuesta ? "(X)" : "(   )"}  Proyectar Respuesta`,
       110,
       165
     );
@@ -408,34 +449,54 @@ for (let i = 0; i < docLines4.length; i++) {
     doc.setFontSize(12);
     doc.setFont("times", "normal");
     doc.text(
-      `${formValues.presupuestal ? "(X)" : "(   )"}  Previsión Presupuestal`,
+      `${formValues.resolucion ? "(X)" : "(   )"}  Proyectar Resolución`,
       110,
       170
     );
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text(`${formValues.devolver ? "(X)" : "(   )"}  Devolver`, 110, 175);
+    doc.text(
+      `${formValues.presupuestal ? "(X)" : "(   )"}  Previsión Presupuestal`,
+      110,
+      175
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`${formValues.devolver ? "(X)" : "(   )"}  Devolver`, 110, 180);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
     doc.text(
       `${formValues.verobs ? "(X)" : "(   )"}  VER OBSERVACIONES`,
       110,
-      180
+      185
     );
 
     //OBSERVACIONES
     doc.setFontSize(12);
     doc.setFont("times", "bold");
-    doc.text("OBSERVACIONES:", 15, 200);
+    doc.text("OBSERVACIONES:", 15, 210);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text(`${formValues.observaciones}`, 15, 205);
+    doc.text(`${formValues.observaciones}`, 15, 215);
 
     doc.setLineWidth(0.3);
-    doc.line(15, 206, 100, 206);
+    doc.line(15, 216, 100, 216);
+
+
+
+    doc.setFontSize(6);
+    doc.setFont("times", "normal");
+    doc.text("cc.", 15, 270);
+    doc.text("-Archivo", 15, 272);
+    doc.text("LVAT/nmgf", 15, 274);
+
+    const imgeData = './firma rectora.png'
+      
+    doc.addImage(imgeData, "PNG", 70, 230, 60, 30, { align: "center" });  
 
     // Guardar el PDF
     // doc.save("ModeloA.pdf");
@@ -444,6 +505,10 @@ for (let i = 0; i < docLines4.length; i++) {
     const pdfUrl = doc.output("bloburl");
     setOutputUrl(pdfUrl);
   };
+
+
+
+
 
   const handleGeneratePDF = () => {
     const doc = new jsPDF();
@@ -510,33 +575,97 @@ for (let i = 0; i < docLines4.length; i++) {
     doc.setFont("times", "normal");
     doc.text(`N° DE FOLIOS: ${formValues.folios}`, 130, 70);
 
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(`DOCUMENTO: ${formValues.documento}`, 20, 80);
+    // Ancho máximo para el campo "Documento"
+    const maxDocWidth = 140;
 
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text("MPV-EPP-740-23.", 20, 85);
+    // Dividir el contenido del campo "Documento" en líneas
+    const docLines = doc.splitTextToSize(formValues.documento, maxDocWidth);
 
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(`REMITIDO POR: ${formValues.remitido}`, 20, 95);
+    // Calcular la altura necesaria para dibujar el campo "Documento"
+    const docHeight = docLines.length * 5; // Multiplicar por 5 para el espacio entre líneas
 
+    // Añadir el campo "Documento" en el PDF
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text(`ASUNTO: ${formValues.asunto}`, 20, 105);
+    doc.text(`DOCUMENTO:`, 20, 80);
+
+    // Definir la posición inicial para el campo "Documento"
+    let docY = 80;
+    let docZ = 76;
+
+    // Dibujar cada línea del campo "Documento"
+    for (let line of docLines) {
+      doc.text(line, 50, docY);
+      doc.setLineWidth(0.2);
+      docY += 5;
+      // Aumentar la posición para la siguiente línea
+      docZ += 5;
+      doc.line(50, docZ, 192, docZ);
+    }
+
+    // Verificar si el campo "Documento" ocupó más de una línea
+    if (docHeight > 5) {
+      // El campo "Documento" ocupó más de una línea, colocar "expediente" debajo
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.expediente}`, 20, docY + 0); // Colocar el campo "expediente" debajo del campo "Documento"
+    } else {
+      // El campo "Documento" ocupó solo una línea, colocar "expediente" en su posición original
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`${formValues.expediente}`, 20, 85); // Posición original para "expediente"
+    }
+
+    // Dividir el contenido del campo "Documento" en líneas
+    const docLines2 = doc.splitTextToSize(formValues.remitido, maxDocWidth);
+
+    // Añadir el campo "Documento" en el PDF
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`REMITIDO POR: `, 20, 98);
+    // Definir la posición inicial para el campo "Documento"
+    let docY2 = 98;
+    let docZ2 = 94;
+
+    // Dibujar cada línea del campo "Documento"
+    for (let line of docLines2) {
+      doc.text(line, 53, docY2);
+      doc.setLineWidth(0.2);
+      docY2 += 5; // Aumentar la posición para la siguiente línea
+      docZ2 += 5;
+      doc.line(53, docZ2, 192, docZ2);
+    }
+
+    const docLines3 = doc.splitTextToSize(formValues.asunto, maxDocWidth);
+
+    // Añadir el campo "Documento" en el PDF
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`ASUNTO: `, 20, 112);
+    // Definir la posición inicial para el campo "Documento"
+    let docY3 = 112;
+    let docZ3 = 108;
+
+    // Dibujar cada línea del campo "Documento"
+    for (let line of docLines3) {
+      doc.text(line, 40, docY3);
+      doc.setLineWidth(0.2);
+      docY3 += 5; // Aumentar la posición para la siguiente línea
+      docZ3 += 5;
+      doc.line(40, docZ3, 192, docZ3);
+    }
 
     //PASE A:
     doc.setFontSize(12);
     doc.setFont("times", "bold");
-    doc.text("PASE A:", 20, 115);
+    doc.text("PASE A:", 20, 125);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
     doc.text(
       `${formValues.viceacade ? "(X)" : "(   )"}  Vicerrectorado Académico`,
       20,
-      130
+      135
     );
 
     doc.setFontSize(12);
@@ -546,7 +675,7 @@ for (let i = 0; i < docLines4.length; i++) {
         formValues.viceinve ? "(X)" : "(   )"
       }  Vicerrectorado de Investigación`,
       20,
-      135
+      140
     );
 
     doc.setFontSize(12);
@@ -554,83 +683,144 @@ for (let i = 0; i < docLines4.length; i++) {
     doc.text(
       `${formValues.secre ? "(X)" : "(   )"}  Secretaría General`,
       20,
-      140
+      145
     );
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text(`${formValues.diga ? "(X)" : "(   )"}  DIGA`, 20, 145);
+    doc.text(`${formValues.diga ? "(X)" : "(   )"}  DIGA`, 20, 150);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
     doc.text(
       `${formValues.posgrado ? "(X)" : "(   )"}  Escuela de Posgrado`,
       20,
-      150
-    );
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(
-      `${
-        formValues.ciencias ? "(X)" : "(   )"
-      }  Facultad de Ciencias Sociales y`,
-      20,
       155
     );
 
+    //Esta parte es la del Facultad y agregar
+    const maxDocWidth2 = 57;
+    // Dividir el contenido del campo "Documento" en líneas
+    const docLines4 = doc.splitTextToSize(formValues.ciencias2, maxDocWidth2);
+
+    // Añadir el campo "Documento" en el PDF
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text("Humanidades", 28, 160);
+    doc.text(`${formValues.ciencias ? "(X)" : "(   )"}  Facultad `, 20, 160);
+    // Definir la posición inicial para el campo "Documento"
+    let docY4 = 160;
+    let docZ4 = 156;
 
+    // Dibujar cada línea del campo "Documento"
+    for (let i = 0; i < docLines4.length; i++) {
+      const line = docLines4[i];
+      if (i === 0) {
+        doc.text(line, 44, docY4);
+        docZ4 += 5;
+        doc.line(44, docZ4, 100, docZ4);
+      } else {
+        doc.text(line, 28, docY4);
+        docZ4 += 5;
+        doc.line(28, docZ4, 100, docZ4);
+      }
+      doc.setLineWidth(0.2);
+      docY4 += 5; // Aumentar la posición para la siguiente línea
+    }
+
+    // Dividir el contenido del campo "Documento" en líneas
+    const docLines5 = doc.splitTextToSize(formValues.direccion2, maxDocWidth2);
+
+    // Añadir el campo "Documento" en el PDF
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text(
-      `${formValues.direccion ? "(X)" : "(   )"}  Dirección    ${
-        formValues.direccion2
-      } `,
-      20,
-      165
-    );
+    doc.text(`${formValues.direccion ? "(X)" : "(   )"}  Dirección `, 20, 170);
+    // Definir la posición inicial para el campo "Documento"
+    let docY5 = 170;
+    let docZ5 = 166;
 
-    doc.setLineWidth(0.3);
-    doc.line(47, 166, 100, 166);
+    // Dibujar cada línea del campo "Documento"
+    for (let i = 0; i < docLines5.length; i++) {
+      const line = docLines5[i];
+      if (i === 0) {
+        doc.text(line, 46, docY5);
+        docZ5 += 5;
+        doc.line(46, docZ5, 100, docZ5);
+      } else {
+        doc.text(line, 28, docY5);
+        docZ5 += 5;
+        doc.line(28, docZ5, 100, docZ5);
+      }
+      doc.setLineWidth(0.2);
+      docY5 += 5; // Aumentar la posición para la siguiente línea
+    }
 
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(
-      `${formValues.oficina ? "(X)" : "(   )"}  Oficina   ${
-        formValues.oficina2
-      } `,
-      20,
-      170
-    );
 
-    doc.setLineWidth(0.3);
-    doc.line(42, 171, 100, 171);
+   // Dividir el contenido del campo "Documento" en líneas
+   const docLines6 = doc.splitTextToSize(formValues.oficina2, maxDocWidth2);
 
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(
-      `${formValues.otro ? "(X)" : "(   )"}  Otro   ${formValues.otro2} `,
-      20,
-      175
-    );
+   // Añadir el campo "Documento" en el PDF
+   doc.setFontSize(12);
+   doc.setFont("times", "normal");
+   doc.text(`${formValues.oficina ? "(X)" : "(   )"}  Oficina `, 20, 180);
+   // Definir la posición inicial para el campo "Documento"
+   let docY6 = 180;
+   let docZ6 = 176;
 
-    doc.setLineWidth(0.3);
-    doc.line(37, 176, 100, 176);
+   // Dibujar cada línea del campo "Documento"
+   for (let i = 0; i < docLines6.length; i++) {
+     const line = docLines6[i];
+     if (i === 0) {
+       doc.text(line, 43, docY6);
+       docZ6 += 5;
+       doc.line(43, docZ6, 100, docZ6);
+     } else {
+       doc.text(line, 28, docY6);
+       docZ6 += 5;
+       doc.line(28, docZ6, 100, docZ6);
+     }
+     doc.setLineWidth(0.2);
+     docY6 += 5; // Aumentar la posición para la siguiente línea
+   } 
+
+
+// Dividir el contenido del campo "Documento" en líneas
+const docLines7 = doc.splitTextToSize(formValues.otro2, maxDocWidth2);
+
+// Añadir el campo "Documento" en el PDF
+doc.setFontSize(12);
+doc.setFont("times", "normal");
+doc.text(`${formValues.otro ? "(X)" : "(   )"}  Otro `, 20, 190);
+// Definir la posición inicial para el campo "Documento"
+let docY7 = 190;
+let docZ7 = 186;
+
+// Dibujar cada línea del campo "Documento"
+for (let i = 0; i < docLines7.length; i++) {
+  const line = docLines7[i];
+  if (i === 0) {
+    doc.text(line, 38, docY7);
+    docZ7 += 5;
+    doc.line(38, docZ7, 100, docZ7);
+  } else {
+    doc.text(line, 28, docY7);
+    docZ7 += 5;
+    doc.line(28, docZ7, 100, docZ7);
+  }
+  doc.setLineWidth(0.2);
+  docY7 += 5; // Aumentar la posición para la siguiente línea
+} 
 
     //PARA:
     doc.setFontSize(12);
     doc.setFont("times", "bold");
-    doc.text("PARA:", 110, 115);
+    doc.text("PARA:", 110, 125);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
     doc.text(
       `${formValues.accion ? "(X)" : "(   )"}  Acción Necesaria`,
       110,
-      130
+      135
     );
 
     doc.setFontSize(12);
@@ -638,25 +828,17 @@ for (let i = 0; i < docLines4.length; i++) {
     doc.text(
       `${formValues.conocimiento ? "(X)" : "(   )"}  Conocimiento`,
       110,
-      135
+      140
     );
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text(`${formValues.informar ? "(X)" : "(   )"}  Informar`, 110, 140);
+    doc.text(`${formValues.informar ? "(X)" : "(   )"}  Informar`, 110, 145);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
     doc.text(
       `${formValues.opinion ? "(X)" : "(   )"}  Opinión Legal`,
-      110,
-      145
-    );
-
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(
-      `${formValues.corresponderle ? "(X)" : "(   )"}  Por corresponderle`,
       110,
       150
     );
@@ -664,7 +846,7 @@ for (let i = 0; i < docLines4.length; i++) {
     doc.setFontSize(12);
     doc.setFont("times", "normal");
     doc.text(
-      `${formValues.indicado ? "(X)" : "(   )"}  Según lo indicado`,
+      `${formValues.corresponderle ? "(X)" : "(   )"}  Por corresponderle`,
       110,
       155
     );
@@ -672,7 +854,7 @@ for (let i = 0; i < docLines4.length; i++) {
     doc.setFontSize(12);
     doc.setFont("times", "normal");
     doc.text(
-      `${formValues.respuesta ? "(X)" : "(   )"}  Proyectar Respuesta`,
+      `${formValues.indicado ? "(X)" : "(   )"}  Según lo indicado`,
       110,
       160
     );
@@ -680,7 +862,7 @@ for (let i = 0; i < docLines4.length; i++) {
     doc.setFontSize(12);
     doc.setFont("times", "normal");
     doc.text(
-      `${formValues.resolucion ? "(X)" : "(   )"}  Proyectar Resolución`,
+      `${formValues.respuesta ? "(X)" : "(   )"}  Proyectar Respuesta`,
       110,
       165
     );
@@ -688,37 +870,57 @@ for (let i = 0; i < docLines4.length; i++) {
     doc.setFontSize(12);
     doc.setFont("times", "normal");
     doc.text(
-      `${formValues.presupuestal ? "(X)" : "(   )"}  Previsión Presupuestal`,
+      `${formValues.resolucion ? "(X)" : "(   )"}  Proyectar Resolución`,
       110,
       170
     );
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text(`${formValues.devolver ? "(X)" : "(   )"}  Devolver`, 110, 175);
+    doc.text(
+      `${formValues.presupuestal ? "(X)" : "(   )"}  Previsión Presupuestal`,
+      110,
+      175
+    );
+
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`${formValues.devolver ? "(X)" : "(   )"}  Devolver`, 110, 180);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
     doc.text(
       `${formValues.verobs ? "(X)" : "(   )"}  VER OBSERVACIONES`,
       110,
-      180
+      185
     );
 
     //OBSERVACIONES
     doc.setFontSize(12);
     doc.setFont("times", "bold");
-    doc.text("OBSERVACIONES:", 15, 195);
+    doc.text("OBSERVACIONES:", 15, 210);
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text(`${formValues.observaciones}`, 15, 200);
+    doc.text(`${formValues.observaciones}`, 15, 215);
 
     doc.setLineWidth(0.3);
-    doc.line(15, 201, 100, 201);
+    doc.line(15, 216, 100, 216);
+
+
+
+    doc.setFontSize(6);
+    doc.setFont("times", "normal");
+    doc.text("cc.", 15, 270);
+    doc.text(`-Archivo ${formValues.cc2}` , 15, 272);
+    doc.text("LVAT/nmgf", 15, 274);
+
+    const imgeData = './firma rectora.png'
+      
+    doc.addImage(imgeData, "PNG", 70, 230, 60, 30, { align: "center" }); 
 
     // Guardar el PDF
-    doc.save("ModeloA.pdf");
+    doc.save(`H.E. N° ${formValues.envio}-2023-R-UNE.pdf`);
     // Resetear los valores del formulario
     resetFormValues();
   };
@@ -978,7 +1180,7 @@ for (let i = 0; i < docLines4.length; i++) {
                       for="laravel-checkbox"
                       className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                     >
-                      Facultad                      
+                      Facultad
                     </label>
                     <input
                       type="text"
@@ -1071,6 +1273,34 @@ for (let i = 0; i < docLines4.length; i++) {
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Otro"
                       value={formValues.otro2}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                </li>
+                <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                  <div className="flex items-center pl-3">
+                    <input
+                      id="cc"
+                      name="cc"
+                      type="checkbox"
+                      checked={formValues.cc}
+                      onChange={handleInputChange}
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                    />
+                    <label
+                      for="laravel-checkbox"
+                      className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      cc
+                    </label>
+                    <input
+                      type="text"
+                      id="cc2"
+                      name="cc2"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="cc"
+                      value={formValues.cc2}
                       onChange={handleInputChange}
                       required
                     />

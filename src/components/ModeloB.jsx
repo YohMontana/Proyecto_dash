@@ -16,6 +16,7 @@ const ModeloB = () => {
 
   
   const [outputUrl, setOutputUrl] = useState("");
+  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -131,7 +132,16 @@ const ModeloB = () => {
 
     doc.setLineWidth(0.5);
     doc.line(20, 176, 190, 176);
+    
+    doc.setFontSize(6);
+    doc.setFont("times", "normal");
+    doc.text("cc.", 15, 270);
+    doc.text(`-Archivo` , 15, 272);
+    doc.text("LVAT/nmgf", 15, 274);
 
+    const imgeData = './firma rectora.png'
+      
+    doc.addImage(imgeData, "PNG", 100, 200, 60, 30, { align: "center" }); 
     // Guardar el PDF
     // doc.save("ModeloB.pdf");
 
@@ -247,7 +257,17 @@ const ModeloB = () => {
 
     doc.setLineWidth(0.5);
     doc.line(20, 176, 190, 176);
-    doc.save("ModeloB.pdf");    
+
+    doc.setFontSize(6);
+    doc.setFont("times", "normal");
+    doc.text("cc.", 15, 270);
+    doc.text(`-Archivo` , 15, 272);
+    doc.text("LVAT/nmgf", 15, 274);
+
+    const imgeData = './firma rectora.png'
+      
+    doc.addImage(imgeData, "PNG", 100, 200, 60, 30, { align: "center" });
+    doc.save(`H.T. N° ${formValues.envio2}-2023-R-UNE.pdf`);    
 
     // Resetear los valores del formulario
     resetFormValues();
@@ -407,6 +427,10 @@ const ModeloB = () => {
             />
           </div>
         </form>
+        <div>
+          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="default_size">Adjuntar Archivo</label>
+          <input class="block w-full mb-5 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="default_size" type="file"></input>
+        </div>
         <button
           type="submit"
           onClick={handleGeneratePDF}
