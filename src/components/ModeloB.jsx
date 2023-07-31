@@ -139,7 +139,7 @@ const ModeloB = () => {
     doc.text(`-Archivo` , 15, 272);
     doc.text("LVAT/nmgf", 15, 274);
 
-    const imgeData = './firma rectora.png'
+    const imgeData = "https://i.ibb.co/SsbhmYm/Firma-rectora.png"
       
     doc.addImage(imgeData, "PNG", 100, 200, 60, 30, { align: "center" }); 
     // Guardar el PDF
@@ -264,7 +264,7 @@ const ModeloB = () => {
     doc.text(`-Archivo` , 15, 272);
     doc.text("LVAT/nmgf", 15, 274);
 
-    const imgeData = './firma rectora.png'
+    const imgeData = "https://i.ibb.co/SsbhmYm/Firma-rectora.png"
       
     doc.addImage(imgeData, "PNG", 100, 200, 60, 30, { align: "center" });
     doc.save(`H.T. N° ${formValues.envio2}-2023-R-UNE.pdf`);    
