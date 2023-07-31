@@ -115,7 +115,7 @@ const Home = () => {
               </p>
             </div>
             {/* cards */}
-            <a
+            <Link
               href="#"
               className="bg-white rounded-2xl p-8 flex flex-col md:flex-row gap-8 w-full drop-shadow-lg border-2 border-transparent hover:border-purple-400 transition-all mb-4"
             >
@@ -141,8 +141,8 @@ const Home = () => {
                 <h3 className="text-xl text-gray-500 mb-2">8.8 - 13.7k PLN</h3>
                 <p className="text-gray-500"> 2 days ago</p>
               </div>
-            </a>
-            <a
+            </Link>
+            <Link
               href="#"
               className="bg-white rounded-2xl p-8 flex flex-col md:flex-row gap-8 w-full drop-shadow-lg border-2 border-transparent hover:border-purple-400 transition-all mb-4"
             >
@@ -165,8 +165,8 @@ const Home = () => {
                 <h3 className="text-xl text-gray-500 mb-2">8.2 - 13.7k PLN</h3>
                 <p className="text-gray-500"> 2 days ago</p>
               </div>
-            </a>
-            <a
+            </Link>
+            <Link
               href="#"
               className="bg-white rounded-2xl p-8 flex flex-col md:flex-row gap-8 w-full drop-shadow-lg border-2 border-transparent hover:border-purple-400 transition-all mb-4"
             >
@@ -192,8 +192,8 @@ const Home = () => {
                 <h3 className="text-xl text-gray-500 mb-2">8.8 - 13.7k PLN</h3>
                 <p className="text-gray-500"> 2 days ago</p>
               </div>
-            </a>
-            <a
+            </Link>
+            <Link
               href="#"
               className="bg-white rounded-2xl p-8 flex flex-col md:flex-row gap-8 w-full drop-shadow-lg border-2 border-transparent hover:border-purple-400 transition-all mb-4"
             >
@@ -219,7 +219,7 @@ const Home = () => {
                 <h3 className="text-xl text-gray-500 mb-2">8.8 - 13.7k PLN</h3>
                 <p className="text-gray-500"> 2 days ago</p>
               </div>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

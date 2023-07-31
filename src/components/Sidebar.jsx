@@ -54,13 +54,13 @@ const Sidebar = () => {
                 </Link>
               </li>
               <li>
-                <a
+                <Link
                   href="#"
                   className="flex items-center gap-4 hover:bg-purple-500 p-4 text-gray-400 hover:text-white rounded-lg transition-colors font-semibold"
                 >
                   <RiMessage2Line />
                   Messenger
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>
@@ -78,13 +78,13 @@ const Sidebar = () => {
               </button>
             </div>
 
-            <a
+            <Link
               href="#"
               className="flex items-center gap-4 hover:bg-purple-500 p-4 text-gray-400 hover:text-white rounded-lg transition-colors font-semibold"
             >
               <RiLogoutBoxRLine />
               Logout
-            </a>
+            </Link>
           </div>
         </div>
       </div>

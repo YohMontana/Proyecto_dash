@@ -5,6 +5,7 @@ import {
   RiArrowDownSLine,
   RiCheckboxBlankCircleFill
 } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -24,16 +25,16 @@ const Header = () => {
       <nav className="w-full md:w-[60%] lg:w-[70%] flex justify-center md:justify-end">
         <ul className="flex items-center gap-4">
           <li>
-            <a href="#" className="relative">
+            <Link href="#" className="relative">
               <RiNotification3Line className="text-xl" />
               <RiCheckboxBlankCircleFill className="absolute -right-1 -top-1 text-xs text-red-500" />
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#" className="flex items-center gap-1">
+            <Link href="#" className="flex items-center gap-1">
               Jhancarlo Esteban Coro
               <RiArrowDownSLine />
-            </a>
+            </Link>
           </li>
         </ul>
       </nav>
