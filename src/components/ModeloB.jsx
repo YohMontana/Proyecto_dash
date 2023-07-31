@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
 import VisualizadorPDF from "./VisualizadorPDF";
-
+import firma from "./firma_rectora.png"
 const ModeloB = () => {
   const [formValues, setFormValues] = useState({
     envio2: "",
@@ -139,7 +139,7 @@ const ModeloB = () => {
     doc.text(`-Archivo` , 15, 272);
     doc.text("LVAT/nmgf", 15, 274);
 
-    const imgeData = './firma_rectora.png'
+    const imgeData = firma;
       
     doc.addImage(imgeData, "PNG", 100, 200, 60, 30, { align: "center" }); 
     // Guardar el PDF
@@ -264,7 +264,7 @@ const ModeloB = () => {
     doc.text(`-Archivo` , 15, 272);
     doc.text("LVAT/nmgf", 15, 274);
 
-    const imgeData = './firma_rectora.png'
+    const imgeData = firma;
       
     doc.addImage(imgeData, "PNG", 100, 200, 60, 30, { align: "center" });
     doc.save(`H.T. N° ${formValues.envio2}-2023-R-UNE.pdf`);    

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
 import VisualizadorPDF from "./VisualizadorPDF";
+import firma from "./firma_rectora.png"
 
 const ModeloA = () => {
   const initialFormValues = {
@@ -494,7 +495,7 @@ for (let i = 0; i < docLines7.length; i++) {
     doc.text("-Archivo", 15, 272);
     doc.text("LVAT/nmgf", 15, 274);
 
-    const imgeData = './firma_rectora.png'
+    const imgeData = firma;
       
     doc.addImage(imgeData, "PNG", 70, 230, 60, 30, { align: "center" });  
 
@@ -915,7 +916,7 @@ for (let i = 0; i < docLines7.length; i++) {
     doc.text(`-Archivo ${formValues.cc2}` , 15, 272);
     doc.text("LVAT/nmgf", 15, 274);
 
-    const imgeData = './firma_rectora.png'
+    const imgeData = firma;
       
     doc.addImage(imgeData, "PNG", 70, 230, 60, 30, { align: "center" }); 
 
