@@ -494,7 +494,7 @@ for (let i = 0; i < docLines7.length; i++) {
     doc.text("-Archivo", 15, 272);
     doc.text("LVAT/nmgf", 15, 274);
 
-    const imgeData = "https://i.ibb.co/SsbhmYm/Firma-rectora.png"
+    const imgeData = './firma_rectora.png'
       
     doc.addImage(imgeData, "PNG", 70, 230, 60, 30, { align: "center" });  
 
@@ -915,7 +915,7 @@ for (let i = 0; i < docLines7.length; i++) {
     doc.text(`-Archivo ${formValues.cc2}` , 15, 272);
     doc.text("LVAT/nmgf", 15, 274);
 
-    const imgeData = "https://i.ibb.co/SsbhmYm/Firma-rectora.png"
+    const imgeData = './firma_rectora.png'
       
     doc.addImage(imgeData, "PNG", 70, 230, 60, 30, { align: "center" }); 
 
