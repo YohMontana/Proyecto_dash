@@ -116,7 +116,7 @@ const Home = () => {
             </div>
             {/* cards */}
             <Link
-              href="#"
+              to="#"
               className="bg-white rounded-2xl p-8 flex flex-col md:flex-row gap-8 w-full drop-shadow-lg border-2 border-transparent hover:border-purple-400 transition-all mb-4"
             >
               {/* Icon */}
@@ -143,7 +143,7 @@ const Home = () => {
               </div>
             </Link>
             <Link
-              href="#"
+              to={"/"}
               className="bg-white rounded-2xl p-8 flex flex-col md:flex-row gap-8 w-full drop-shadow-lg border-2 border-transparent hover:border-purple-400 transition-all mb-4"
             >
               {/* Icon */}
@@ -167,7 +167,7 @@ const Home = () => {
               </div>
             </Link>
             <Link
-              href="#"
+              to={"/"}
               className="bg-white rounded-2xl p-8 flex flex-col md:flex-row gap-8 w-full drop-shadow-lg border-2 border-transparent hover:border-purple-400 transition-all mb-4"
             >
               {/* Icon */}
@@ -194,7 +194,7 @@ const Home = () => {
               </div>
             </Link>
             <Link
-              href="#"
+              to={"/"}
               className="bg-white rounded-2xl p-8 flex flex-col md:flex-row gap-8 w-full drop-shadow-lg border-2 border-transparent hover:border-purple-400 transition-all mb-4"
             >
               {/* Icon */}

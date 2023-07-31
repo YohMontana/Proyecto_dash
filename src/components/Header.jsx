@@ -25,13 +25,13 @@ const Header = () => {
       <nav className="w-full md:w-[60%] lg:w-[70%] flex justify-center md:justify-end">
         <ul className="flex items-center gap-4">
           <li>
-            <Link href="#" className="relative">
+            <Link to={"/"} className="relative">
               <RiNotification3Line className="text-xl" />
               <RiCheckboxBlankCircleFill className="absolute -right-1 -top-1 text-xs text-red-500" />
             </Link>
           </li>
           <li>
-            <Link href="#" className="flex items-center gap-1">
+            <Link to={"/"} className="flex items-center gap-1">
               Jhancarlo Esteban Coro
               <RiArrowDownSLine />
             </Link>
