@@ -1,4 +1,4 @@
-const baseURL = 'http://localhost:3500'; // Reemplaza con la URL de tu backend
+const baseURL = 'https://backend-tramite.onrender.com'; // Reemplaza con la URL de tu backend
 
 const emailService = {
   sendEmail: async (emailData) => {
