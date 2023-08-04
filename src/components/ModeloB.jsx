@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
 import VisualizadorPDF from "./VisualizadorPDF";
-import firma from "./firma_rectora.png"
+import firma from "./firma_rectora.png";
+import { PDFDocument } from "pdf-lib";
+
 const ModeloB = () => {
   const [formValues, setFormValues] = useState({
     envio2: "",
@@ -14,16 +16,14 @@ const ModeloB = () => {
     // Agrega aquí todos los inputs que necesites
   });
 
-  
   const [outputUrl, setOutputUrl] = useState("");
-  
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormValues((prevFormValues) => ({
-      ...prevFormValues,
-      [name]: value,
-    }));
+  //***** Nuevo estado para almacenar el archivo seleccionado
+  const [pdfFile, setPdfFile] = useState(null);
+  
+  //****** Función para manejar la carga de archivos
+  const handleFileChange = (event) => {
+    setPdfFile(event.target.files[0]);
   };
 
   const generatePDF = () => {
@@ -132,26 +132,24 @@ const ModeloB = () => {
 
     doc.setLineWidth(0.5);
     doc.line(20, 176, 190, 176);
-    
+
     doc.setFontSize(6);
     doc.setFont("times", "normal");
     doc.text("cc.", 15, 270);
-    doc.text(`-Archivo` , 15, 272);
+    doc.text(`-Archivo`, 15, 272);
     doc.text("LVAT/nmgf", 15, 274);
 
     const imgeData = firma;
-      
-    doc.addImage(imgeData, "PNG", 100, 200, 60, 30, { align: "center" }); 
+
+    doc.addImage(imgeData, "PNG", 100, 200, 60, 30, { align: "center" });
     // Guardar el PDF
     // doc.save("ModeloB.pdf");
 
     // Actualizar el estado con la URL del PDF
     const pdfUrl = doc.output("bloburl");
     setOutputUrl(pdfUrl);
-
-    
   };
-  
+
   const handleGeneratePDF = () => {
     const doc = new jsPDF();
     // Crear instancia de jsPDF
@@ -261,16 +259,57 @@ const ModeloB = () => {
     doc.setFontSize(6);
     doc.setFont("times", "normal");
     doc.text("cc.", 15, 270);
-    doc.text(`-Archivo` , 15, 272);
+    doc.text(`-Archivo`, 15, 272);
     doc.text("LVAT/nmgf", 15, 274);
 
     const imgeData = firma;
-      
-    doc.addImage(imgeData, "PNG", 100, 200, 60, 30, { align: "center" });
-    doc.save(`H.T. N° ${formValues.envio2}-2023-R-UNE.pdf`);    
 
-    // Resetear los valores del formulario
+    doc.addImage(imgeData, "PNG", 100, 200, 60, 30, { align: "center" });
+    const pdfBlob1 = doc.output("blob");
     resetFormValues();
+    
+    if (pdfFile) {
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        const pdfBlob2 = new Blob([e.target.result], {
+          type: "application/pdf",
+        });
+
+        const pdfDoc1 = await PDFDocument.load(await pdfBlob1.arrayBuffer());
+        const pdfDoc2 = await PDFDocument.load(await pdfBlob2.arrayBuffer());
+
+        const copiedPages = await pdfDoc1.copyPages(
+          pdfDoc2,
+          pdfDoc2.getPageIndices()
+        );
+        copiedPages.forEach((page) => {
+          pdfDoc1.addPage(page);
+        });
+
+        const mergedPdfBlob = await pdfDoc1.save();
+
+        // Descarga directa del archivo PDF combinado
+        const downloadLink = document.createElement("a");
+        downloadLink.href = URL.createObjectURL(
+          new Blob([mergedPdfBlob], { type: "application/pdf" })
+        );
+        downloadLink.download = `H.T. N ${formValues.envio2}-2023-R-UNE.pdf`;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+      };
+
+      reader.readAsArrayBuffer(pdfFile);
+     
+    }
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormValues((prevFormValues) => ({
+      ...prevFormValues,
+      [name]: value,
+    }));
   };
 
   const resetFormValues = () => {
@@ -284,7 +323,7 @@ const ModeloB = () => {
       observaciones2: "",
     });
   };
-  
+
   useEffect(() => {
     generatePDF();
   }, [formValues]); // Ejecutar generatePDF cada vez que formValues cambie
@@ -428,15 +467,27 @@ const ModeloB = () => {
           </div>
         </form>
         <div>
-          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="default_size">Adjuntar Archivo</label>
-          <input class="block w-full mb-5 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="default_size" type="file"></input>
+          <label
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            for="fileInput"
+          >
+            Adjuntar Archivo
+          </label>
+          <input
+            type="file"
+            id="fileAdjunto"
+            name="fileAdjunto"
+            
+            class="block w-full mb-5 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+            onChange={handleFileChange}
+          ></input>
         </div>
         <button
-          type="submit"
+          type="button"
           onClick={handleGeneratePDF}
           className="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
         >
-          Generar PDF B
+          Generar PDF y Combinar Archivos
         </button>
       </div>
 

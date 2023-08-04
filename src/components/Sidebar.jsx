@@ -55,11 +55,11 @@ const Sidebar = () => {
               </li>
               <li>
                 <Link
-                  to={"/"}
+                  to={"/Pruebas"}
                   className="flex items-center gap-4 hover:bg-purple-500 p-4 text-gray-400 hover:text-white rounded-lg transition-colors font-semibold"
                 >
                   <RiMessage2Line />
-                  Messenger
+                  Pruebas
                 </Link>
               </li>
             </ul>
