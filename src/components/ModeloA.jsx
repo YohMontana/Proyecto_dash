@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { jsPDF } from "jspdf/dist/jspdf.umd.min.js";
 import VisualizadorPDF from "./VisualizadorPDF";
-import firma from "./firma_rectora.png"
+import firma from "./firma_rectora.png";
+import { PDFDocument } from "pdf-lib";
 
 const ModeloA = () => {
   const initialFormValues = {
@@ -80,6 +81,14 @@ const ModeloA = () => {
   });
 
   const [outputUrl, setOutputUrl] = useState("");
+
+  const [pdfFile, setPdfFile] = useState(null);
+
+  //****** Función para manejar la carga de archivos
+  const handleFileChange = (event) => {
+    
+    setPdfFile(event.target.files[0]);
+  };
 
   const handleInputChange = (event) => {
     const { name, value, type, checked } = event.target;
@@ -334,61 +343,59 @@ const ModeloA = () => {
       docY5 += 5; // Aumentar la posición para la siguiente línea
     }
 
+    // Dividir el contenido del campo "Documento" en líneas
+    const docLines6 = doc.splitTextToSize(formValues.oficina2, maxDocWidth2);
 
-   // Dividir el contenido del campo "Documento" en líneas
-   const docLines6 = doc.splitTextToSize(formValues.oficina2, maxDocWidth2);
+    // Añadir el campo "Documento" en el PDF
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`${formValues.oficina ? "(X)" : "(   )"}  Oficina `, 20, 180);
+    // Definir la posición inicial para el campo "Documento"
+    let docY6 = 180;
+    let docZ6 = 176;
 
-   // Añadir el campo "Documento" en el PDF
-   doc.setFontSize(12);
-   doc.setFont("times", "normal");
-   doc.text(`${formValues.oficina ? "(X)" : "(   )"}  Oficina `, 20, 180);
-   // Definir la posición inicial para el campo "Documento"
-   let docY6 = 180;
-   let docZ6 = 176;
+    // Dibujar cada línea del campo "Documento"
+    for (let i = 0; i < docLines6.length; i++) {
+      const line = docLines6[i];
+      if (i === 0) {
+        doc.text(line, 43, docY6);
+        docZ6 += 5;
+        doc.line(43, docZ6, 100, docZ6);
+      } else {
+        doc.text(line, 28, docY6);
+        docZ6 += 5;
+        doc.line(28, docZ6, 100, docZ6);
+      }
+      doc.setLineWidth(0.2);
+      docY6 += 5; // Aumentar la posición para la siguiente línea
+    }
 
-   // Dibujar cada línea del campo "Documento"
-   for (let i = 0; i < docLines6.length; i++) {
-     const line = docLines6[i];
-     if (i === 0) {
-       doc.text(line, 43, docY6);
-       docZ6 += 5;
-       doc.line(43, docZ6, 100, docZ6);
-     } else {
-       doc.text(line, 28, docY6);
-       docZ6 += 5;
-       doc.line(28, docZ6, 100, docZ6);
-     }
-     doc.setLineWidth(0.2);
-     docY6 += 5; // Aumentar la posición para la siguiente línea
-   } 
+    // Dividir el contenido del campo "Documento" en líneas
+    const docLines7 = doc.splitTextToSize(formValues.otro2, maxDocWidth2);
 
+    // Añadir el campo "Documento" en el PDF
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`${formValues.otro ? "(X)" : "(   )"}  Otro `, 20, 190);
+    // Definir la posición inicial para el campo "Documento"
+    let docY7 = 190;
+    let docZ7 = 186;
 
-// Dividir el contenido del campo "Documento" en líneas
-const docLines7 = doc.splitTextToSize(formValues.otro2, maxDocWidth2);
-
-// Añadir el campo "Documento" en el PDF
-doc.setFontSize(12);
-doc.setFont("times", "normal");
-doc.text(`${formValues.otro ? "(X)" : "(   )"}  Otro `, 20, 190);
-// Definir la posición inicial para el campo "Documento"
-let docY7 = 190;
-let docZ7 = 186;
-
-// Dibujar cada línea del campo "Documento"
-for (let i = 0; i < docLines7.length; i++) {
-  const line = docLines7[i];
-  if (i === 0) {
-    doc.text(line, 38, docY7);
-    docZ7 += 5;
-    doc.line(38, docZ7, 100, docZ7);
-  } else {
-    doc.text(line, 28, docY7);
-    docZ7 += 5;
-    doc.line(28, docZ7, 100, docZ7);
-  }
-  doc.setLineWidth(0.2);
-  docY7 += 5; // Aumentar la posición para la siguiente línea
-} 
+    // Dibujar cada línea del campo "Documento"
+    for (let i = 0; i < docLines7.length; i++) {
+      const line = docLines7[i];
+      if (i === 0) {
+        doc.text(line, 38, docY7);
+        docZ7 += 5;
+        doc.line(38, docZ7, 100, docZ7);
+      } else {
+        doc.text(line, 28, docY7);
+        docZ7 += 5;
+        doc.line(28, docZ7, 100, docZ7);
+      }
+      doc.setLineWidth(0.2);
+      docY7 += 5; // Aumentar la posición para la siguiente línea
+    }
 
     //PARA:
     doc.setFontSize(12);
@@ -487,17 +494,20 @@ for (let i = 0; i < docLines7.length; i++) {
     doc.setLineWidth(0.3);
     doc.line(15, 216, 100, 216);
 
-
-
     doc.setFontSize(6);
     doc.setFont("times", "normal");
     doc.text("cc.", 15, 270);
-    doc.text("-Archivo", 15, 272);
-    doc.text("LVAT/nmgf", 15, 274);
-
+    if (formValues.cc2) {
+      doc.text(`- ${formValues.cc2}`, 15, 272);
+      doc.text(`-Archivo`, 15, 274);
+      doc.text("LVAT/nmgf", 15, 276);
+    } else {
+      doc.text(`-Archivo`, 15, 272);
+      doc.text("LVAT/nmgf", 15, 274);
+    }
     const imgeData = firma;
-      
-    doc.addImage(imgeData, "PNG", 70, 230, 60, 30, { align: "center" });  
+
+    doc.addImage(imgeData, "PNG", 70, 230, 60, 30, { align: "center" });
 
     // Guardar el PDF
     // doc.save("ModeloA.pdf");
@@ -506,10 +516,6 @@ for (let i = 0; i < docLines7.length; i++) {
     const pdfUrl = doc.output("bloburl");
     setOutputUrl(pdfUrl);
   };
-
-
-
-
 
   const handleGeneratePDF = () => {
     const doc = new jsPDF();
@@ -755,61 +761,59 @@ for (let i = 0; i < docLines7.length; i++) {
       docY5 += 5; // Aumentar la posición para la siguiente línea
     }
 
+    // Dividir el contenido del campo "Documento" en líneas
+    const docLines6 = doc.splitTextToSize(formValues.oficina2, maxDocWidth2);
 
-   // Dividir el contenido del campo "Documento" en líneas
-   const docLines6 = doc.splitTextToSize(formValues.oficina2, maxDocWidth2);
+    // Añadir el campo "Documento" en el PDF
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`${formValues.oficina ? "(X)" : "(   )"}  Oficina `, 20, 180);
+    // Definir la posición inicial para el campo "Documento"
+    let docY6 = 180;
+    let docZ6 = 176;
 
-   // Añadir el campo "Documento" en el PDF
-   doc.setFontSize(12);
-   doc.setFont("times", "normal");
-   doc.text(`${formValues.oficina ? "(X)" : "(   )"}  Oficina `, 20, 180);
-   // Definir la posición inicial para el campo "Documento"
-   let docY6 = 180;
-   let docZ6 = 176;
+    // Dibujar cada línea del campo "Documento"
+    for (let i = 0; i < docLines6.length; i++) {
+      const line = docLines6[i];
+      if (i === 0) {
+        doc.text(line, 43, docY6);
+        docZ6 += 5;
+        doc.line(43, docZ6, 100, docZ6);
+      } else {
+        doc.text(line, 28, docY6);
+        docZ6 += 5;
+        doc.line(28, docZ6, 100, docZ6);
+      }
+      doc.setLineWidth(0.2);
+      docY6 += 5; // Aumentar la posición para la siguiente línea
+    }
 
-   // Dibujar cada línea del campo "Documento"
-   for (let i = 0; i < docLines6.length; i++) {
-     const line = docLines6[i];
-     if (i === 0) {
-       doc.text(line, 43, docY6);
-       docZ6 += 5;
-       doc.line(43, docZ6, 100, docZ6);
-     } else {
-       doc.text(line, 28, docY6);
-       docZ6 += 5;
-       doc.line(28, docZ6, 100, docZ6);
-     }
-     doc.setLineWidth(0.2);
-     docY6 += 5; // Aumentar la posición para la siguiente línea
-   } 
+    // Dividir el contenido del campo "Documento" en líneas
+    const docLines7 = doc.splitTextToSize(formValues.otro2, maxDocWidth2);
 
+    // Añadir el campo "Documento" en el PDF
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`${formValues.otro ? "(X)" : "(   )"}  Otro `, 20, 190);
+    // Definir la posición inicial para el campo "Documento"
+    let docY7 = 190;
+    let docZ7 = 186;
 
-// Dividir el contenido del campo "Documento" en líneas
-const docLines7 = doc.splitTextToSize(formValues.otro2, maxDocWidth2);
-
-// Añadir el campo "Documento" en el PDF
-doc.setFontSize(12);
-doc.setFont("times", "normal");
-doc.text(`${formValues.otro ? "(X)" : "(   )"}  Otro `, 20, 190);
-// Definir la posición inicial para el campo "Documento"
-let docY7 = 190;
-let docZ7 = 186;
-
-// Dibujar cada línea del campo "Documento"
-for (let i = 0; i < docLines7.length; i++) {
-  const line = docLines7[i];
-  if (i === 0) {
-    doc.text(line, 38, docY7);
-    docZ7 += 5;
-    doc.line(38, docZ7, 100, docZ7);
-  } else {
-    doc.text(line, 28, docY7);
-    docZ7 += 5;
-    doc.line(28, docZ7, 100, docZ7);
-  }
-  doc.setLineWidth(0.2);
-  docY7 += 5; // Aumentar la posición para la siguiente línea
-} 
+    // Dibujar cada línea del campo "Documento"
+    for (let i = 0; i < docLines7.length; i++) {
+      const line = docLines7[i];
+      if (i === 0) {
+        doc.text(line, 38, docY7);
+        docZ7 += 5;
+        doc.line(38, docZ7, 100, docZ7);
+      } else {
+        doc.text(line, 28, docY7);
+        docZ7 += 5;
+        doc.line(28, docZ7, 100, docZ7);
+      }
+      doc.setLineWidth(0.2);
+      docY7 += 5; // Aumentar la posición para la siguiente línea
+    }
 
     //PARA:
     doc.setFontSize(12);
@@ -908,27 +912,66 @@ for (let i = 0; i < docLines7.length; i++) {
     doc.setLineWidth(0.3);
     doc.line(15, 216, 100, 216);
 
-
-
     doc.setFontSize(6);
     doc.setFont("times", "normal");
     doc.text("cc.", 15, 270);
-    doc.text(`-Archivo ${formValues.cc2}` , 15, 272);
-    doc.text("LVAT/nmgf", 15, 274);
+    if (formValues.cc2) {
+      doc.text(`- ${formValues.cc2}`, 15, 272);
+      doc.text(`-Archivo`, 15, 274);
+      doc.text("LVAT/nmgf", 15, 276);
+    } else {
+      doc.text(`-Archivo`, 15, 272);
+      doc.text("LVAT/nmgf", 15, 274);
+    }
 
     const imgeData = firma;
-      
-    doc.addImage(imgeData, "PNG", 70, 230, 60, 30, { align: "center" }); 
 
-    // Guardar el PDF
-    doc.save(`H.E. N° ${formValues.envio}-2023-R-UNE.pdf`);
+    doc.addImage(imgeData, "PNG", 70, 230, 60, 30, { align: "center" });
+
+    const pdfBlob1 = doc.output("blob");
     // Resetear los valores del formulario
+    
+    if (pdfFile) {
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        const pdfBlob2 = new Blob([e.target.result], {
+          type: "application/pdf",
+        });
+
+        const pdfDoc1 = await PDFDocument.load(await pdfBlob1.arrayBuffer());
+        const pdfDoc2 = await PDFDocument.load(await pdfBlob2.arrayBuffer());
+
+        const copiedPages = await pdfDoc1.copyPages(
+          pdfDoc2,
+          pdfDoc2.getPageIndices()
+        );
+        copiedPages.forEach((page) => {
+          pdfDoc1.addPage(page);
+        });
+
+        const mergedPdfBlob = await pdfDoc1.save();
+
+        // Descarga directa del archivo PDF combinado
+        const downloadLink = document.createElement("a");
+        downloadLink.href = URL.createObjectURL(
+          new Blob([mergedPdfBlob], { type: "application/pdf" })
+        );
+        downloadLink.download = `H.E. N ${formValues.envio}-2023-R-UNE.pdf`;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+      };
+
+      reader.readAsArrayBuffer(pdfFile);
+    }
     resetFormValues();
   };
 
   const resetFormValues = () => {
     console.log("Resetting form values");
     setFormValues(initialFormValues);
+    
+    console.log(pdfFile)
   };
 
   useEffect(() => {
@@ -1534,12 +1577,27 @@ for (let i = 0; i < docLines7.length; i++) {
             />
           </div>
         </form>
+        <div>
+          <label
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            for="fileInput"
+          >
+            Adjuntar Archivo
+          </label>
+          <input
+            type="file"
+            id="fileAdjunto"
+            name="fileAdjunto"
+            class="block w-full mb-5 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+            onChange={handleFileChange}
+          ></input>
+        </div>
         <button
           type="submit"
           onClick={handleGeneratePDF}
           className="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
         >
-          Generar PDF A
+          Generar Hoja de Envío
         </button>
       </div>
       <VisualizadorPDF url={outputUrl} />

@@ -69,22 +69,22 @@ const Sidebar = () => {
             <img src="img.svg" alt="Image" />
             {/* Update */}
             <div className="bg-purple-50 p-8 flex flex-col gap-4 rounded-3xl">
-              <h3 className="text-xl text-center">Get upgrade</h3>
+              <h3 className="text-xl text-center">Visítanos</h3>
               <p className="text-gray-500 text-center">
-                Lorem ipsum, dolor sit amet consectetur{" "}
+                Puedes visitar nuestra página{" "}
               </p>
               <button className="bg-purple-600 text-white p-2 rounded-lg">
-                Learn more
+                Click Aquí
               </button>
             </div>
 
-            <Link
-              to={"/"}
+            <a
+              href="https://www.une.edu.pe/uneweb/"
               className="flex items-center gap-4 hover:bg-purple-500 p-4 text-gray-400 hover:text-white rounded-lg transition-colors font-semibold"
             >
               <RiLogoutBoxRLine />
               Logout
-            </Link>
+            </a>
           </div>
         </div>
       </div>
