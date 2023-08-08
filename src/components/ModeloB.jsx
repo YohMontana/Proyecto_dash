@@ -13,6 +13,7 @@ const ModeloB = () => {
     remitido2: "",
     asunto2: "",
     observaciones2: "",
+    cc2: "",
     // Agrega aquí todos los inputs que necesites
   });
 
@@ -20,7 +21,7 @@ const ModeloB = () => {
 
   //***** Nuevo estado para almacenar el archivo seleccionado
   const [pdfFile, setPdfFile] = useState(null);
-  
+
   //****** Función para manejar la carga de archivos
   const handleFileChange = (event) => {
     setPdfFile(event.target.files[0]);
@@ -136,8 +137,14 @@ const ModeloB = () => {
     doc.setFontSize(6);
     doc.setFont("times", "normal");
     doc.text("cc.", 15, 270);
-    doc.text(`-Archivo`, 15, 272);
-    doc.text("LVAT/nmgf", 15, 274);
+    if (formValues.cc2) {
+      doc.text(`- ${formValues.cc2}`, 15, 272);
+      doc.text(`-Archivo`, 15, 274);
+      doc.text("LVAT/nmgf", 15, 276);
+    } else {
+      doc.text(`-Archivo`, 15, 272);
+      doc.text("LVAT/nmgf", 15, 274);
+    }
 
     const imgeData = firma;
 
@@ -259,15 +266,21 @@ const ModeloB = () => {
     doc.setFontSize(6);
     doc.setFont("times", "normal");
     doc.text("cc.", 15, 270);
-    doc.text(`-Archivo`, 15, 272);
-    doc.text("LVAT/nmgf", 15, 274);
+    if (formValues.cc2) {
+      doc.text(`- ${formValues.cc2}`, 15, 272);
+      doc.text(`-Archivo`, 15, 274);
+      doc.text("LVAT/nmgf", 15, 276);
+    } else {
+      doc.text(`-Archivo`, 15, 272);
+      doc.text("LVAT/nmgf", 15, 274);
+    }
 
     const imgeData = firma;
 
     doc.addImage(imgeData, "PNG", 100, 200, 60, 30, { align: "center" });
     const pdfBlob1 = doc.output("blob");
     resetFormValues();
-    
+
     if (pdfFile) {
       const reader = new FileReader();
       reader.onload = async (e) => {
@@ -300,7 +313,6 @@ const ModeloB = () => {
       };
 
       reader.readAsArrayBuffer(pdfFile);
-     
     }
   };
 
@@ -321,6 +333,7 @@ const ModeloB = () => {
       remitido2: "",
       asunto2: "",
       observaciones2: "",
+      cc2: "",
     });
   };
 
@@ -465,6 +478,23 @@ const ModeloB = () => {
               required
             />
           </div>
+          <div className="mb-6">
+            <label
+              for="documento"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              CON COPIA A:
+            </label>
+            <input
+              type="text"
+              id="cc2"
+              name="cc2"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[70%] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="cc"
+              value={formValues.cc2}
+              onChange={handleInputChange}
+            />
+          </div>
         </form>
         <div>
           <label
@@ -477,7 +507,6 @@ const ModeloB = () => {
             type="file"
             id="fileAdjunto"
             name="fileAdjunto"
-            
             class="block w-full mb-5 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
             onChange={handleFileChange}
           ></input>
@@ -487,7 +516,7 @@ const ModeloB = () => {
           onClick={handleGeneratePDF}
           className="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
         >
-          Generar PDF y Combinar Archivos
+          Generar Hoja de Trámite
         </button>
       </div>
 
