@@ -32,7 +32,7 @@ const Header = () => {
           </li>
           <li>
             <Link to={"/"} className="flex items-center gap-1">
-              Jhancarlo Esteban Coro
+              Neyser Moises Garcia Flores
               <RiArrowDownSLine />
             </Link>
           </li>
