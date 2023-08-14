@@ -120,18 +120,39 @@ const Enviar = () => {
               className="bg-gray-50 border w-[50%] border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
             >
               <option value="">Elige un centro de costo</option>
-              <option value="DIGA">DIGA</option>
-              <option value="escuela_de_posgrado">Escuela de Posgrado</option>
-              <option value="facultad_ciencias_sociales">
-                Facultad de Ciencias Sociales
+
+              <option value="comision_fiscalizacion">Comisión Permanente de Fiscalización</option>
+              <option value="defensor_universitario">Defensa Universitaria</option>
+              <option value="oficina_asesoria">Oficina de Asesoría Legal</option>
+              <option value="oficina_planeamiento">Oficina de Planeamiento Estratégico y Presupuesto</option>
+              <option value="organo_control">Órgano de Control Institucional</option>
+              <option value="tribunal_honor">Tribunal de Honor</option>
+              <option value="unidad_organizacion">Unidad de Organización y Procesos</option>
+              <option value="unidad_planeamiento">Unidad de Planeamiento</option>
+              <option value="unidad_presupuesto">Unidad de Presupuesto</option>
+              <option value="unidad_rectorado">Unidad del Rectorado</option>
+              <option value="unidad_vicerrectorado_academico">
+                Unidad de Vicerrectorado Academico
               </option>
-              <option value="secretaria_general">Secretaria General</option>
+              <option value="unidad_vicerrectorado_investigacion">
+                Unidad de Vicerrectorado de Investigación
+              </option>
               <option value="vicerrectorado_academico">
                 Vicerrectorado Academico
               </option>
               <option value="vicerrectorado_de_investigacion">
                 Vicerrectorado De Investigacion
               </option>
+
+
+
+
+
+              <option value="escuela_de_posgrado">Escuela de Posgrado</option>
+              <option value="facultad_ciencias_sociales">
+                Facultad de Ciencias Sociales
+              </option>
+              <option value="secretaria_general">Secretaria General</option>
               <option value="prueba">Prueba de correo</option>
               {/* Agrega más centros de costo aquí */}
               <option value="otro">Otro</option>

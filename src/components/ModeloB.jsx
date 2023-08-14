@@ -98,10 +98,18 @@ const ModeloB = () => {
       110,
       { align: "center" }
     );
+    
+    if (formValues.fecha2) {
+    const formattedFecha = new Date(formValues.fecha2 + 'T00:00:00Z').toLocaleDateString('es-ES', {
+      day: '2-digit',
+      month: 'long',
+      timeZone: 'UTC',
+    });
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text(`FECHA: ${formValues.fecha2}`, 20, 120);
+    doc.text(`FECHA: ${formattedFecha}`, 20, 120);
+  }
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
@@ -228,9 +236,17 @@ const ModeloB = () => {
       { align: "center" }
     );
 
-    doc.setFontSize(12);
-    doc.setFont("times", "normal");
-    doc.text(`FECHA: ${formValues.fecha2}`, 20, 120);
+    if (formValues.fecha2) {
+      const formattedFecha = new Date(formValues.fecha2 + 'T00:00:00Z').toLocaleDateString('es-ES', {
+        day: '2-digit',
+        month: 'long',
+        timeZone: 'UTC',
+      });
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`FECHA: ${formattedFecha}`, 20, 120);
+    }
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
@@ -313,7 +329,8 @@ const ModeloB = () => {
       };
 
       reader.readAsArrayBuffer(pdfFile);
-    }
+    } 
+    
   };
 
   const handleInputChange = (event) => {

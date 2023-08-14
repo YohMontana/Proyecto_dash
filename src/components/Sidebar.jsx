@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { RiDashboardLine, RiBriefcaseLine, RiCalendar2Line, RiMessage2Line, RiLogoutBoxRLine, RiMenu3Fill, RiCloseLine } from "react-icons/ri";
+import {
+  RiDashboardLine,
+  RiBriefcaseLine,
+  RiCalendar2Line,
+  RiMessage2Line,
+  RiLogoutBoxRLine,
+  RiMenu3Fill,
+  RiCloseLine,
+} from "react-icons/ri";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,11 +19,18 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className={`fixed lg:static w-[65%] md:w-[40%] lg:w-full top-0 z-50 bg-white transition-all ${isOpen ? "-left-0" : "-left-full"
-        } w-full h-full overflow-y-scroll col-span-1 p-5 border-r`}>
+      <div
+        className={`fixed lg:static w-[65%] md:w-[40%] lg:w-full top-0 z-50 bg-white transition-all ${
+          isOpen ? "-left-0" : "-left-full"
+        } w-full h-full overflow-y-scroll col-span-1 p-5 border-r`}
+      >
         {/* Logotipo */}
         <div className="text-center p-5 mt-032 flex flex-col items-center justify-center">
-          <h1 className="uppercase font-bold tracking-[4px] p-5">UNE</h1>
+          
+          <p className="font-bold text-sm font-serif">UNIVERSIDAD NACIONAL DE EDUCACIÓN</p>
+          <p className="font-bold text-xs font-serif" >Enrique Guzmán y Valle</p>
+          <p className="font-bold text-xs font-serif italic">"Alma Máter del Magisterio Nacional"</p>
+          <p className="font-bold mb-5 text-sm font-serif">RECTORADO</p>
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/0/08/Escudo_UNE.png"
             alt=""
@@ -74,17 +89,17 @@ const Sidebar = () => {
                 Puedes visitar nuestra página{" "}
               </p>
               <button className="bg-purple-600 text-white p-2 rounded-lg">
-                Click Aquí
+                <a href="https://www.une.edu.pe/uneweb/" target="_blank">Click Aquí</a>
               </button>
             </div>
 
-            <a
-              href="https://www.une.edu.pe/uneweb/"
+            <Link
+              to={""}
               className="flex items-center gap-4 hover:bg-purple-500 p-4 text-gray-400 hover:text-white rounded-lg transition-colors font-semibold"
             >
               <RiLogoutBoxRLine />
               Logout
-            </a>
+            </Link>
           </div>
         </div>
       </div>
