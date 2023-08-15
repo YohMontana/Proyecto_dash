@@ -165,7 +165,7 @@ const ModeloB = () => {
     setOutputUrl(pdfUrl);
   };
 
-  const handleGeneratePDF = () => {
+  const handleGeneratePDF = async () => {
     const doc = new jsPDF();
     // Crear instancia de jsPDF
 
@@ -295,16 +295,17 @@ const ModeloB = () => {
 
     doc.addImage(imgeData, "PNG", 100, 200, 60, 30, { align: "center" });
     const pdfBlob1 = doc.output("blob");
-    resetFormValues();
+    
+    const pdfDoc1 = await PDFDocument.load(await pdfBlob1.arrayBuffer());
+    const pdfDoc2 = await PDFDocument.create();
 
-    if (pdfFile) {
+    if(pdfFile){
       const reader = new FileReader();
       reader.onload = async (e) => {
         const pdfBlob2 = new Blob([e.target.result], {
           type: "application/pdf",
         });
 
-        const pdfDoc1 = await PDFDocument.load(await pdfBlob1.arrayBuffer());
         const pdfDoc2 = await PDFDocument.load(await pdfBlob2.arrayBuffer());
 
         const copiedPages = await pdfDoc1.copyPages(
@@ -314,9 +315,9 @@ const ModeloB = () => {
         copiedPages.forEach((page) => {
           pdfDoc1.addPage(page);
         });
-
+    
         const mergedPdfBlob = await pdfDoc1.save();
-
+    
         // Descarga directa del archivo PDF combinado
         const downloadLink = document.createElement("a");
         downloadLink.href = URL.createObjectURL(
@@ -326,12 +327,28 @@ const ModeloB = () => {
         document.body.appendChild(downloadLink);
         downloadLink.click();
         document.body.removeChild(downloadLink);
-      };
-
-      reader.readAsArrayBuffer(pdfFile);
-    } 
+    }
+    reader.readAsArrayBuffer(pdfFile);
+  } else {
+    const mergedPdfBlob = await pdfDoc1.save();
     
-  };
+        // Descarga directa del archivo PDF combinado
+        const downloadLink = document.createElement("a");
+        downloadLink.href = URL.createObjectURL(
+          new Blob([mergedPdfBlob], { type: "application/pdf" })
+        );
+        downloadLink.download = `H.T. N ${formValues.envio2}-2023-R-UNE.pdf`;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+  }
+        
+
+        resetFormValues();
+      };
+         
+    
+  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
