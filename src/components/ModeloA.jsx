@@ -156,9 +156,21 @@ const ModeloA = () => {
       { align: "center" }
     );
 
-    doc.setFontSize(12);
+    if (formValues.fecha) {
+      const formattedFecha = new Date(formValues.fecha + 'T00:00:00Z').toLocaleDateString('es-ES', {
+        day: '2-digit',
+        month: 'long',
+        timeZone: 'UTC',
+      });
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`FECHA: ${formattedFecha}`, 20, 70);
+    }else{
+      doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text(`FECHA: ${formValues.fecha}`, 20, 70);
+    doc.text("FECHA: ", 20, 70);
+    }
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");
@@ -574,9 +586,21 @@ const ModeloA = () => {
       { align: "center" }
     );
 
-    doc.setFontSize(12);
+    if (formValues.fecha) {
+      const formattedFecha = new Date(formValues.fecha + 'T00:00:00Z').toLocaleDateString('es-ES', {
+        day: '2-digit',
+        month: 'long',
+        timeZone: 'UTC',
+      });
+  
+      doc.setFontSize(12);
+      doc.setFont("times", "normal");
+      doc.text(`FECHA: ${formattedFecha}`, 20, 70);
+    }else{
+      doc.setFontSize(12);
     doc.setFont("times", "normal");
-    doc.text(`FECHA: ${formValues.fecha}`, 20, 70);
+    doc.text("FECHA: ", 20, 70);
+    }
 
     doc.setFontSize(12);
     doc.setFont("times", "normal");

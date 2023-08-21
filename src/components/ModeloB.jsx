@@ -109,6 +109,10 @@ const ModeloB = () => {
     doc.setFontSize(12);
     doc.setFont("times", "normal");
     doc.text(`FECHA: ${formattedFecha}`, 20, 120);
+  }else{
+    doc.setFontSize(12);
+  doc.setFont("times", "normal");
+  doc.text("FECHA: ", 20, 120);
   }
 
     doc.setFontSize(12);
